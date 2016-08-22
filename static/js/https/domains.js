@@ -63,6 +63,19 @@ $(document).ready(function () {
     }
   };
 
+  // Describe what's going on with this domain's subdomains.
+  var subdomains = function(data, type, row) {
+    if (type == "sort") return null;
+
+    // If the domain is preloaded, responsibilities are absolved.
+    if (row.https.preloaded == 2)
+      return "All subdomains automatically covered through preloading.";
+
+    // TODO: this is a mockup.
+    else
+      return n("Subdomains: 45% of 302 subdomains in DAP data...");
+  };
+
   var linkGrade = function(data, type, row) {
     var grade = display(names.grade)(data, type);
     if (type == "sort")
@@ -217,6 +230,7 @@ $(document).ready(function () {
     ssl3: "https://https.cio.gov/technical-guidelines/#ssl-and-tls",
     tls12: "https://https.cio.gov/technical-guidelines/#ssl-and-tls",
     preload: "https://https.cio.gov/hsts/#hsts-preloading",
+    preloading_compliance: "https://https.cio.gov/guide/#options-for-hsts-compliance",
     stay_preloaded: "https://hstspreload.appspot.com/#continued-requirements",
     submit: "https://hstspreload.appspot.com"
   };
@@ -282,6 +296,10 @@ $(document).ready(function () {
         {
           data: "",
           render: httpDetails
+        },
+        {
+          data: "",
+          render: subdomains
         }
       ],
 
