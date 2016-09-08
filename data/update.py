@@ -23,7 +23,11 @@ import data.processing
 #    - This takes ~25 hours with 1-process SSL Labs, as of 2016-01-24.
 #    - Should drop results into data/output/scan (or a symlink).
 #    - If exits with non-0 code, this should exit with non-0 code.
-#    - TODO: How should an admin be notified of an error?
+#
+# 1a. Subdomains.
+#    - Gather latest subdomains from public sources.
+#    - Run pshtt, once for each source, on gathered subdomains.
+#    - This creates 4 output directories. 2 gather, 2 scan (w/cache).
 #
 # 2. Run processing.py to generate front-end-ready data as data/db.json.
 #
@@ -49,6 +53,20 @@ SCAN_COMMAND = os.environ.get("DOMAIN_SCAN_PATH", None)
 SCANNERS = os.environ.get("SCANNERS", "pshtt,analytics,sslyze,inspect,tls")
 ANALYTICS_URL = os.environ.get("ANALYTICS_URL", META["data"]["analytics_url"])
 
+# subdomain gathering/scanning information
+GATHER_TARGET = os.path.join(this_dir, "./output/subdomains/gather")
+GATHER_COMMAND = os.environ.get("DOMAIN_GATHER_PATH", None)
+GATHER_SUFFIX = ".gov"
+GATHER_ANALYTICS_URL = META["data"]["analytics_subdomains_url"]
+GATHER_PARENTS = DOMAINS  # Limit subdomains to set of base domains.
+GATHERERS = [
+  ["censys"],
+  ["url", "--url=%s" % GATHER_ANALYTICS_URL]
+]
+SUBDOMAIN_SCAN_TARGET = os.path.join(this_dir, "./output/subdomains/scan")
+SUBDOMAIN_SCANNERS = "pshtt"
+
+
 # Options:
 # --date: override date, defaults to contents of meta.json
 # --scan=[skip,download,here]
@@ -61,9 +79,17 @@ def run(options):
   # Definitive scan date for the run.
   today = datetime.datetime.strftime(datetime.datetime.now(), "%Y-%m-%d")
 
-  # Download scan data, do a new scan, or skip altogether.
+  # 1. Download scan data, do a new scan, or skip altogether.
   scan_mode = options.get("scan", "skip")
   if scan_mode == "here":
+    # 1a. Gather and scan subdomains.
+    print("Kicking off subdomain gathering and scanning.")
+    print()
+    subdomains(options)
+    print()
+    print("Subdomain gathering and scan complete")
+    print()
+
     print("Kicking off a scan.")
     print()
     scan()
@@ -72,6 +98,7 @@ def run(options):
   elif scan_mode == "download":
     print("Downloading latest production scan data from S3.")
     print()
+    # TODO: also download subdomain data.
     live_scanned = "s3://%s/live/scan/" % (BUCKET_NAME)
     shell_out(["aws", "s3", "sync", live_scanned, SCANNED_DATA])
     print()
@@ -137,14 +164,77 @@ def scan():
   analytics = "--analytics=%s" % ANALYTICS_URL
   output = "--output=%s" % SCAN_TARGET
 
-  shell_out([
+  full_command =[
     SCAN_COMMAND, DOMAINS,
     scanners, analytics, output,
     "--debug",
-    "--force",
-    "--sort",
-    #"--serial",
-  ])
+    "--sort"
+  ]
+
+  if options.get("debug"):
+    full_command += ["--serial"]
+  else:
+    full_command += ["--force"]
+
+  shell_out(full_command)
+
+# Use domain-scan to gather .gov hostnames from public sources.
+# Then run pshtt on each gathered hostname.
+def subdomains(options):
+
+  # Use domain-scan to gather .gov domains from public sources.
+  def gather_subdomains(gatherer, command):
+    print("[%s][gather] Gathering subdomains." % gatherer)
+
+    gatherer_output = os.path.join(GATHER_TARGET, gatherer)
+
+    full_command = [GATHER_COMMAND]
+    full_command += command
+
+    # Common to all gatherers.
+    full_command += [
+      "--suffix=%s" % GATHER_SUFFIX,
+      "--output=%s" % gatherer_output,
+      "--parents=%s" % GATHER_PARENTS,
+      "--sort",
+      "--debug"
+    ]
+
+    # only matters for censys (targeted at 1 page of federal domains)
+    if options.get("debug"):
+      full_command += ["--end=200", "--start=200"]
+
+    shell_out(full_command)
+
+
+  # Run pshtt on each gathered set of subdomains.
+  def scan_subdomains(gatherer):
+    print("[%s][scan] Scanning subdomains." % gatherer)
+
+    subdomains = os.path.join(GATHER_TARGET, gatherer, "results", ("%s.csv" % gatherer))
+    scanner_output = os.path.join(SUBDOMAIN_SCAN_TARGET, gatherer)
+
+    full_command = [
+      SCAN_COMMAND,
+      subdomains,
+      "--scan=%s" % SUBDOMAIN_SCANNERS,
+      "--output=%s" % scanner_output,
+      "--debug",
+      "--sort"
+    ]
+
+    if options.get("debug"):
+      full_command += ["--serial"]
+    else:
+      full_command += ["--force"]
+
+    shell_out(full_command)
+
+
+  for command in GATHERERS:
+    gatherer = command[0]
+    gather_subdomains(gatherer, command)
+    scan_subdomains(gatherer)
 
 
 def shell_out(command, env=None):
