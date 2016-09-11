@@ -171,8 +171,11 @@ def scan():
     "--sort"
   ]
 
+  # In debug mode, use cached data, and allow easy Ctrl-C.
   if options.get("debug"):
     full_command += ["--serial"]
+
+  # In real mode, ignore cached data, and parallelize.
   else:
     full_command += ["--force"]
 
@@ -200,7 +203,8 @@ def subdomains(options):
       "--debug"
     ]
 
-    # only matters for censys (targeted at 1 page of federal domains)
+    # Debug mode, limit censys gathering to 1 page
+    # (targeted at getting a small set of federal domains)
     if options.get("debug"):
       full_command += ["--end=200", "--start=200"]
 
@@ -223,8 +227,11 @@ def subdomains(options):
       "--sort"
     ]
 
+    # In debug mode, use cached data, and allow easy Ctrl-C.
     if options.get("debug"):
       full_command += ["--serial"]
+
+    # In real mode, ignore cached data, and parallelize.
     else:
       full_command += ["--force"]
 
