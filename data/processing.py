@@ -113,7 +113,7 @@ def run(date):
   # Calculate high-level per-domain conclusions for each report.
   domain_reports = process_domains(domains, agencies, scan_data)
   # Save them in the database.
-  sorted_types = domain_reports.keys()
+  sorted_types = list(domain_reports.keys())
   sorted_types.sort()
   for report_type in sorted_types:
 
@@ -414,14 +414,9 @@ def analytics_report_for(domain_name, domain, scan_data):
     'participating': boolean_for(analytics['Participates in Analytics'])
   }
 
-# HTTPS conclusions for a domain based on pshtt/tls domain-scan data.
-def https_report_for(domain_name, domain, scan_data):
-  pshtt = scan_data[domain_name]['pshtt']
-
+# Given a pshtt report, fill in a dict with the conclusions.
+def https_behavior_for(pshtt):
   report = {}
-
-  ###
-  # Is it there? There for most clients? Not there?
 
   # assumes that HTTPS would be technically present, with or without issues
   if (pshtt["Downgrades HTTPS"] == "True"):
@@ -520,6 +515,13 @@ def https_report_for(domain_name, domain, scan_data):
   report['hsts_age'] = hsts_age
   report['preloaded'] = preloaded
 
+  return report
+
+# HTTPS conclusions for a domain based on pshtt/tls domain-scan data.
+def https_report_for(domain_name, domain, scan_data):
+  pshtt = scan_data[domain_name]['pshtt']
+
+  report = https_behavior_for(pshtt)
 
   ###
   # Include the SSL Labs grade for a domain.
@@ -534,7 +536,7 @@ def https_report_for(domain_name, domain, scan_data):
   rc4 = None
 
   # Not relevant if no HTTPS
-  if (https <= 0):
+  if (report['uses'] <= 0):
     grade = -1 # N/A
 
   elif tls is None:
