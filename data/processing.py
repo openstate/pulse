@@ -298,9 +298,10 @@ def load_scan_data(domains):
             scan_data[domain]['subdomains'] = {}
 
           if scan_data[domain]['subdomains'].get(source) is None:
-            scan_data[domain]['subdomains'][source] = {}
+            scan_data[domain]['subdomains'][source] = []
 
-          scan_data[domain]['subdomains'][source][subdomain] = dict_row
+          # Store as an array, no need to reference by name.
+          scan_data[domain]['subdomains'][source].append(dict_row)
 
   return scan_data
 
@@ -358,33 +359,9 @@ def update_agency_totals():
 
     # HTTPS
     eligible = Domain.eligible_for_agency(agency['slug'], 'https')
+    eligible = list(map(lambda w: w['https'], eligible))
 
-    agency_report = {
-      'eligible': len(eligible),
-      'uses': 0,
-      'enforces': 0,
-      'hsts': 0,
-      'grade': 0
-    }
-
-    for domain in eligible:
-      report = domain['https']
-
-      # Needs to be enabled, with issues is allowed
-      if report['uses'] >= 1:
-        agency_report['uses'] += 1
-
-      # Needs to be Default or Strict to be 'Yes'
-      if report['enforces'] >= 2:
-        agency_report['enforces'] += 1
-
-      # Needs to be present with >= 1 year max-age for canonical endpoint
-      if report['hsts'] >= 2:
-        agency_report['hsts'] += 1
-
-      # Needs to be A- or above
-      if report['grade'] >= 4:
-        agency_report['grade'] += 1
+    agency_report = total_https_report(eligible)
 
     print("[%s][%s] Adding report." % (agency['slug'], 'https'))
     Agency.add_report(agency['slug'], 'https', agency_report)
@@ -517,10 +494,42 @@ def https_behavior_for(pshtt):
 
   return report
 
+# 'eligible' should be a list of dicts with https report data.
+def total_https_report(eligible):
+  total_report = {
+    'eligible': len(eligible),
+    'uses': 0,
+    'enforces': 0,
+    'hsts': 0,
+    'grade': 0
+  }
+
+  for report in eligible:
+
+    # Needs to be enabled, with issues is allowed
+    if report['uses'] >= 1:
+      total_report['uses'] += 1
+
+    # Needs to be Default or Strict to be 'Yes'
+    if report['enforces'] >= 2:
+      total_report['enforces'] += 1
+
+    # Needs to be present with >= 1 year max-age for canonical endpoint
+    if report['hsts'] >= 2:
+      total_report['hsts'] += 1
+
+    # Needs to be A- or above
+    if (report.get('grade') is not None) and (report['grade'] >= 4):
+      total_report['grade'] += 1
+
+  return total_report
+
 # HTTPS conclusions for a domain based on pshtt/tls domain-scan data.
 def https_report_for(domain_name, domain, scan_data):
   pshtt = scan_data[domain_name]['pshtt']
 
+  # Initialize to the value of the pshtt report.
+  # (Moved to own method to make it reusable for subdomains.)
   report = https_behavior_for(pshtt)
 
   ###
@@ -573,6 +582,21 @@ def https_report_for(domain_name, domain, scan_data):
   report['rc4'] = rc4
   report['ssl3'] = ssl3
   report['tls12'] = tls12
+
+  # Now load the pshtt data from subdomains, for each source.
+  if scan_data[domain_name].get('subdomains'):
+    report['subdomains'] = {}
+    for source in scan_data[domain_name]['subdomains']:
+      print("[%s][%s] Aggregating subdomain data." % (domain_name, source))
+
+      subdomains = scan_data[domain_name]['subdomains'][source]
+      eligible = []
+      for subdomain in subdomains:
+        eligible.append(https_behavior_for(subdomain))
+
+      subtotals = total_https_report(eligible)
+      del subtotals['grade']  # not measured for subdomains
+      report['subdomains'][source] = subtotals
 
   return report
 
