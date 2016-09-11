@@ -16,6 +16,7 @@ import csv
 import json
 import yaml
 import os
+import glob
 import slugify
 import datetime
 import subprocess
@@ -28,6 +29,12 @@ DOMAINS = os.environ.get("DOMAINS", META["data"]["domains_url"])
 # domains.csv is downloaded and live-cached during the scan
 INPUT_DOMAINS_DATA = os.path.join(this_dir, "./output/scan/cache")
 INPUT_SCAN_DATA = os.path.join(this_dir, "./output/scan/results")
+
+# Base directory for scanned subdomain data.
+SUBDOMAIN_SCAN_DATA = os.path.join(this_dir, "./output/subdomains/scan")
+# Maps domain-scan names to specific sources,
+# and whitelists which sources we know how to process.
+SUBDOMAIN_SOURCES = {'censys': 'censys', 'url': 'dap'}
 
 ###
 # Main task flow.
@@ -128,7 +135,7 @@ def run(date):
   print_report()
 
 
-# Reads in input CSVs.
+# Reads in input CSVs (domain list).
 def load_domain_data():
 
   domain_map = {}
@@ -188,7 +195,7 @@ def load_domain_data():
 
 
 # Load in data from the CSVs produced by domain-scan.
-# The 'domains' map is sent in to ignore untracked domains.
+# The 'domains' map is used to ignore any untracked domains.
 def load_scan_data(domains):
 
   scan_data = {}
@@ -256,6 +263,44 @@ def load_scan_data(domains):
         dict_row[headers[i]] = cell
 
       scan_data[domain]['analytics'] = dict_row
+
+  # Next, load in subdomain pshtt data (if present).
+  subdomain_dirs = glob.glob("%s/*" % SUBDOMAIN_SCAN_DATA)
+  for scan_dir in subdomain_dirs:
+    sub_dir = os.path.split(scan_dir)[-1]
+    source = SUBDOMAIN_SOURCES[sub_dir]
+
+    # We only scan subdomains with pshtt.
+    source_csv = os.path.join(SUBDOMAIN_SCAN_DATA, sub_dir, "results", "pshtt.csv")
+
+    headers = []
+    with open(source_csv, newline='') as csvfile:
+      for row in csv.reader(csvfile):
+        if (row[0].lower() == "domain"):
+          headers = row
+          continue
+
+        subdomain = row[0].lower()
+        domain = row[1].lower()
+        if not domains.get(domain):
+          print("[%s][%s] Skipping, not a subdomain of a tracked domain." % (source, subdomain))
+          continue
+
+        dict_row = {}
+        for i, cell in enumerate(row):
+          dict_row[headers[i]] = cell
+
+        # Optimization: only bother storing in memory if Live is True.
+        if boolean_for(dict_row['Live']):
+
+          # Initialize subdomains obj if this is its first one.
+          if scan_data[domain].get('subdomains') is None:
+            scan_data[domain]['subdomains'] = {}
+
+          if scan_data[domain]['subdomains'].get(source) is None:
+            scan_data[domain]['subdomains'][source] = {}
+
+          scan_data[domain]['subdomains'][source][subdomain] = dict_row
 
   return scan_data
 
@@ -345,6 +390,8 @@ def update_agency_totals():
     Agency.add_report(agency['slug'], 'https', agency_report)
 
 
+# TODO: A domain can also be eligible if it has eligible subdomains.
+#       Has display ramifications.
 def eligible_for_https(domain):
   return (domain["live"] == True)
 
@@ -356,6 +403,7 @@ def eligible_for_analytics(domain):
     # managed in data/ineligible/analytics.yml
     (domain["exclude"]["analytics"] == False)
   )
+
 
 # Analytics conclusions for a domain based on analytics domain-scan data.
 def analytics_report_for(domain_name, domain, scan_data):
