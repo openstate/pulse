@@ -92,7 +92,7 @@ def run(options):
 
     print("Kicking off a scan.")
     print()
-    scan()
+    scan(options)
     print()
     print("Domain-scan complete.")
   elif scan_mode == "download":
@@ -159,7 +159,7 @@ def upload(date):
 
 # Use domain-scan to scan .gov domains from the set domain URL.
 # Drop the output into data/output/scan/results.
-def scan():
+def scan(options):
   scanners = "--scan=%s" % SCANNERS
   analytics = "--analytics=%s" % ANALYTICS_URL
   output = "--output=%s" % SCAN_TARGET
