@@ -90,10 +90,15 @@ def run(date):
 
   # Save what we've got to the database so far.
 
-  for domain_name in domains.keys():
+  sorted_domains = list(domains.keys())
+  sorted_domains.sort()
+  sorted_agencies = list(agencies.keys())
+  sorted_agencies.sort()
+
+  for domain_name in sorted_domains:
     Domain.create(domains[domain_name])
     print("[%s] Created." % domain_name)
-  for agency_name in agencies.keys():
+  for agency_name in sorted_agencies:
     Agency.create(agencies[agency_name])
     # print("[%s] Created." % agency_name)
 
@@ -102,7 +107,11 @@ def run(date):
   domain_reports = process_domains(domains, agencies, scan_data)
   # Save them in the database.
   for report_type in domain_reports.keys():
-    for domain_name in domain_reports[report_type].keys():
+
+    sorted_reports = list(domain_reports[report_type].keys())
+    sorted_reports.sort()
+
+    for domain_name in sorted_reports:
       print("[%s][%s] Adding report." % (report_type, domain_name))
       Domain.add_report(domain_name, report_type, domain_reports[report_type][domain_name])
 
