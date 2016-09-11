@@ -106,7 +106,9 @@ def run(date):
   # Calculate high-level per-domain conclusions for each report.
   domain_reports = process_domains(domains, agencies, scan_data)
   # Save them in the database.
-  for report_type in domain_reports.keys():
+  sorted_types = domain_reports.keys()
+  sorted_types.sort()
+  for report_type in sorted_types:
 
     sorted_reports = list(domain_reports[report_type].keys())
     sorted_reports.sort()

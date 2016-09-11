@@ -23,6 +23,8 @@ class Report:
   # https.uses (number)
   # https.enforces (number)
   # https.hsts (number)
+  # https.subdomains_eligible
+  # https.subdomains_uses
   # analytics.eligible (number)
   # analytics.participates (number)
 
@@ -61,7 +63,15 @@ class Domain:
   # canonical (string, URL)
   #
   # https: {
-  #   [many things]
+  #   [many things],
+  #   subdomains: {
+  #     [censys, url, etc.] {
+  #       eligible,
+  #       uses,
+  #       enforces,
+  #       hsts
+  #     }
+  #   }
   # },
   # analytics: {
   #   participating? (boolean)
@@ -146,6 +156,12 @@ class Agency:
   #   enforces (number)
   #   hsts (number)
   #   grade (number, >= A-)
+  #   subdomains {
+  #     eligible (number)
+  #     uses (number)
+  #     enforces (number)
+  #     hsts (number)
+  #   }
   # }
   # analytics {
   #   eligible (number)
