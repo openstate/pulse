@@ -360,7 +360,6 @@ def update_agency_totals():
     # HTTPS
     eligible = Domain.eligible_for_agency(agency['slug'], 'https')
     eligible = list(map(lambda w: w['https'], eligible))
-
     agency_report = total_https_report(eligible)
 
     print("[%s][%s] Adding report." % (agency['slug'], 'https'))
