@@ -71,9 +71,18 @@ $(document).ready(function () {
     if (row.https.preloaded == 2)
       return "All subdomains automatically covered through preloading.";
 
-    // TODO: this is a mockup.
-    else
-      return n("Subdomains: 45% of 302 subdomains in DAP data...");
+    if (!row.https.subdomains || !row.https.subdomains.dap)
+      return ""
+
+    var message = "";
+    if (row.https.subdomains.dap) {
+      message += "Of " + row.https.subdomains.dap.eligible +
+        " subdomains known to " + l(links.dap, n("DAP")) +
+        " (" + l(links.dap_data, "source") + "), " +
+        row.https.subdomains.dap.uses + " use HTTPS.";
+    }
+
+    return n("Subdomains: ") + message;
   };
 
   var linkGrade = function(data, type, row) {
@@ -93,6 +102,11 @@ $(document).ready(function () {
     return "https://www.ssllabs.com/ssltest/analyze.html?d=" + domain;
   };
 
+  var censysUrlFor = function(domain) {
+    return "https://censys.io/certificates?q=" +
+      "parsed.subject.common_name:%22" + domain +
+      "%22%20or%20parsed.extensions.subject_alt_name.dns_names:%22" + domain + "%22";
+  };
 
   // Construct a sentence explaining the HTTP situation.
   var httpDetails = function(data, type, row) {
@@ -205,7 +219,7 @@ $(document).ready(function () {
 
     // CASE: HTTPS downgrades.
     else if (https == 0)
-      details = "HTTPS redirects visitors down to HTTP."
+      details = "Visitors are redirected from HTTPS down to HTTP."
 
     // CASE: HTTPS isn't supported at all.
     else if (https == -1)
@@ -225,6 +239,9 @@ $(document).ready(function () {
   };
 
   var links = {
+    dap: "https://analytics.usa.gov",
+    dap_data: "https://analytics.usa.gov/data/live/sites.csv",
+    censys: "https://censys.io",
     hsts: "https://https.cio.gov/hsts/",
     sha1: "https://https.cio.gov/technical-guidelines/#signature-algorithms",
     ssl3: "https://https.cio.gov/technical-guidelines/#ssl-and-tls",
