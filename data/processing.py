@@ -632,6 +632,7 @@ def branch_for(agency):
     "Congressional Office of Compliance",
     "Stennis Center for Public Service",
     "U.S. Capitol Police"
+    "Architect of the Capitol"
   ]:
     return "legislative"
 
