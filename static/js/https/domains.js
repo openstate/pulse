@@ -74,23 +74,33 @@ $(document).ready(function () {
     if (row.https.preloaded == 1)
       return "All subdomains will be protected when preloading is complete.";
 
-    if (!row.https.subdomains)
-      return "";
+    if (!row.https.subdomains) {
+      if (row.https.uses >= 1)
+        return "No public subdomains found. " + l("preload", "Consider preloading.");
+      else
+        return "No public subdomains found.";
+    }
 
-    var sources = [];
+    var sources = [],
+        message = "",
+        pct = null;
 
+    // TODO: make this a function.
     if (row.https.subdomains.censys) {
-      sources.push("Of " +
-        l(censysUrlFor(row.domain), ("" + row.https.subdomains.censys.eligible + " public sites")) +
-        " known to " + l(links.censys, "Censys") +
-        ", " + row.https.subdomains.censys.enforces + " enforce HTTPS.")
+      pct = Utils.percent(row.https.subdomains.censys.enforces, row.https.subdomains.censys.eligible);
+      message = n("" + pct + "%") + " of " +
+        row.https.subdomains.censys.eligible + " public sites "
+        + l(censysUrlFor(row.domain), "known to Censys") +
+        " enforce HTTPS.";
+      sources.push(message);
     }
 
     if (row.https.subdomains.dap) {
-      sources.push("Of " +
-        l(links.dap_data, ("" + row.https.subdomains.dap.eligible + " public sites")) +
-        " known to " + l(links.dap, "the Digital Analytics Program") +
-        ", " + row.https.subdomains.dap.enforces + " enforce HTTPS.")
+      pct = Utils.percent(row.https.subdomains.dap.enforces, row.https.subdomains.dap.eligible);
+      sources.push(n("" + pct + "%") + " of " +
+        row.https.subdomains.dap.eligible + " public sites " +
+        l(links.dap_data, "known to the Digital Analytics Program") +
+        " enforce HTTPS.")
     }
 
     if (sources.length == 0)

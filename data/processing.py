@@ -359,8 +359,9 @@ def update_agency_totals():
 
     # HTTPS
     eligible = Domain.eligible_for_agency(agency['slug'], 'https')
-    eligible = list(map(lambda w: w['https'], eligible))
-    agency_report = total_https_report(eligible)
+    eligible_https = list(map(lambda w: w['https'], eligible))
+    agency_report = total_https_report(eligible_https)
+    agency_report['subdomains'] = total_https_subdomain_report(eligible)
 
     print("[%s][%s] Adding report." % (agency['slug'], 'https'))
     Agency.add_report(agency['slug'], 'https', agency_report)
@@ -522,6 +523,34 @@ def total_https_report(eligible):
       total_report['grade'] += 1
 
   return total_report
+
+# Total up the number of eligible subdomains.
+# Ignore preloaded domains.
+def total_https_subdomain_report(eligible):
+  total_report = {
+    'eligible': 0,
+    'uses': 0,
+    'enforces': 0,
+    'hsts': 0
+  }
+
+  for domain in eligible:
+    if domain['https']['preloaded'] == 2:
+      print("[%s] Skipping subdomain calculation, preloaded." % domain['domain'])
+      continue
+
+    subdomains = domain['https'].get('subdomains')
+    if subdomains:
+      for source in SUBDOMAIN_SOURCES:
+        source_data = subdomains.get(source)
+        if source_data:
+          total_report['eligible'] += source_data['eligible']
+          total_report['uses'] += source_data['uses']
+          total_report['enforces'] += source_data['enforces']
+          total_report['hsts'] += source_data['hsts']
+
+  return total_report
+
 
 # HTTPS conclusions for a domain based on pshtt/tls domain-scan data.
 def https_report_for(domain_name, domain, scan_data):
@@ -691,7 +720,7 @@ def percent(num, denom):
   return round((num / denom) * 100)
 
 # mkdir -p in python, from:
-# http://stackoverflow.com/questions/600268/mkdir-p-functionality-in-python
+# https://stackoverflow.com/questions/600268/mkdir-p-functionality-in-python
 def mkdir_p(path):
     try:
         os.makedirs(path)
