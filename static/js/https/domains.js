@@ -164,9 +164,11 @@ $(document).ready(function () {
     var urgent = (grade == 0);
 
     // CASE: Perfect score!
+    // HSTS max-age is allowed to be weak, because client enforcement means that
+    // the max-age is effectively overridden in modern browsers.
     if (
         (https >= 1) && (behavior >= 2) &&
-        (hsts == 2) && (preloaded == 2) &&
+        (hsts >= 1) && (preloaded == 2) &&
         (tls.length == 0) && (grade == 6))
       details = g("Perfect score! HTTPS is strictly enforced throughout the zone.");
 
