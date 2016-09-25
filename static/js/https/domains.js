@@ -69,20 +69,38 @@ $(document).ready(function () {
 
     // If the domain is preloaded, responsibilities are absolved.
     if (row.https.preloaded == 2)
-      return "All subdomains automatically covered through preloading.";
+      return "All subdomains automatically protected through preloading.";
 
-    if (!row.https.subdomains || !row.https.subdomains.dap)
-      return ""
+    if (row.https.preloaded == 1)
+      return "All subdomains will be protected when preloading is complete.";
 
-    var message = "";
-    if (row.https.subdomains.dap) {
-      message += "Of " + row.https.subdomains.dap.eligible +
-        " subdomains known to " + l(links.dap, n("DAP")) +
-        " (" + l(links.dap_data, "source") + "), " +
-        row.https.subdomains.dap.uses + " use HTTPS.";
+    if (!row.https.subdomains)
+      return "";
+
+    var sources = [];
+
+    if (row.https.subdomains.censys) {
+      sources.push("Of " +
+        l(censysUrlFor(row.domain), ("" + row.https.subdomains.censys.eligible + " public sites")) +
+        " known to " + l(links.censys, "Censys") +
+        ", " + row.https.subdomains.censys.enforces + " enforce HTTPS.")
     }
 
-    return n("Subdomains: ") + message;
+    if (row.https.subdomains.dap) {
+      sources.push("Of " +
+        l(links.dap_data, ("" + row.https.subdomains.dap.eligible + " public sites")) +
+        " known to " + l(links.dap, "the Digital Analytics Program") +
+        ", " + row.https.subdomains.dap.enforces + " enforce HTTPS.")
+    }
+
+    if (sources.length == 0)
+      return "";
+
+    sources.push("For more details, " + l(links.subdomains, "read our methodology") +
+      ", or " + l("test", "download data for this agency") + ".");
+
+    var p = "<p class=\"indents\">";
+    return n("Public subdomains: ") + p + sources.join("</p>" + p) + "</p>";
   };
 
   var linkGrade = function(data, type, row) {
@@ -249,6 +267,7 @@ $(document).ready(function () {
     ssl3: "https://https.cio.gov/technical-guidelines/#ssl-and-tls",
     tls12: "https://https.cio.gov/technical-guidelines/#ssl-and-tls",
     preload: "https://https.cio.gov/hsts/#hsts-preloading",
+    subdomains: "/https/guidance/#subdomains",
     preloading_compliance: "https://https.cio.gov/guide/#options-for-hsts-compliance",
     stay_preloaded: "https://hstspreload.appspot.com/#continued-requirements",
     submit: "https://hstspreload.appspot.com"
