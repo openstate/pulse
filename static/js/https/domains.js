@@ -173,8 +173,6 @@ $(document).ready(function () {
     if (grade >= 0) {
       if (tls.length > 0)
         tlsDetails += tls.join(". ") + ".";
-      else if (grade < 6)
-        tlsDetails += l(labsUrlFor(row.canonical), "Review SSL Labs report") + " to resolve TLS quality issues.";
     }
 
     // Principles of message crafting:
@@ -204,9 +202,7 @@ $(document).ready(function () {
     else if (
         (https >= 1) && (behavior >= 2) &&
         (hsts == 2) && (preloaded == 2)) {
-      details = g("Almost perfect!") + " " + tlsDetails;
-      // Override F grade override.
-      urgent = false;
+      details = g("Excellent! HTTPS is strictly enforced throughout the zone.");
     }
 
     // CASE: HSTS preloaded, but HSTS header is missing.
