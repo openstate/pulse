@@ -32,6 +32,7 @@ INPUT_SCAN_DATA = os.path.join(this_dir, "./output/scan/results")
 
 # Base directory for scanned subdomain data.
 SUBDOMAIN_SCAN_DATA = os.path.join(this_dir, "./output/subdomains/scan")
+SUBDOMAIN_AGENCY_OUTPUT = os.path.join(this_dir, "./output/subdomains/agencies/")
 # Maps domain-scan names to specific sources,
 # and whitelists which sources we know how to process.
 SUBDOMAIN_SOURCES = {'censys': 'censys', 'url': 'dap'}
@@ -111,7 +112,11 @@ def run(date):
 
 
   # Calculate high-level per-domain conclusions for each report.
-  domain_reports = process_domains(domains, agencies, scan_data)
+  domain_reports, subdomain_reports = process_domains(domains, agencies, scan_data)
+
+  # Convenience: write out subdomain reports as CSVs per-agency.
+  save_subdomain_reports(subdomain_reports)
+
   # Save them in the database.
   sorted_types = list(domain_reports.keys())
   sorted_types.sort()
@@ -314,6 +319,11 @@ def process_domains(domains, agencies, scan_data):
     'https': {}
   }
 
+  # Used to generate per-agency rolled-up subdomain downloads.
+  subdomain_reports = {
+    'https': {}
+  }
+
   # For each domain, determine eligibility and, if eligible,
   # use the scan data to draw conclusions.
   for domain_name in domains.keys():
@@ -325,10 +335,10 @@ def process_domains(domains, agencies, scan_data):
 
     if eligible_for_https(domains[domain_name]):
       reports['https'][domain_name] = https_report_for(
-        domain_name, domains[domain_name], scan_data
+        domain_name, domains[domain_name], scan_data, subdomain_reports
       )
 
-  return reports
+  return reports, subdomain_reports
 
 # Go through each report type and add agency totals for each type.
 def update_agency_totals():
@@ -553,7 +563,8 @@ def total_https_subdomain_report(eligible):
 
 
 # HTTPS conclusions for a domain based on pshtt/tls domain-scan data.
-def https_report_for(domain_name, domain, scan_data):
+# Modified subdomain_reports in place.
+def https_report_for(domain_name, domain, scan_data, subdomain_reports):
   pshtt = scan_data[domain_name]['pshtt']
 
   # Initialize to the value of the pshtt report.
@@ -611,6 +622,11 @@ def https_report_for(domain_name, domain, scan_data):
   report['ssl3'] = ssl3
   report['tls12'] = tls12
 
+  # Initialize subdomain report gatherer if needed.
+  agency = domain['agency_slug']
+  if subdomain_reports['https'].get(agency) is None:
+    subdomain_reports['https'][agency] = []
+
   # Now load the pshtt data from subdomains, for each source.
   if scan_data[domain_name].get('subdomains'):
     report['subdomains'] = {}
@@ -619,8 +635,19 @@ def https_report_for(domain_name, domain, scan_data):
 
       subdomains = scan_data[domain_name]['subdomains'][source]
       eligible = []
+
       for subdomain in subdomains:
-        eligible.append(https_behavior_for(subdomain))
+        behavior = https_behavior_for(subdomain)
+        eligible.append(behavior)
+
+        # Store the subdomain CSV fields referenced in app/data.py.
+        subdomain_reports['https'][agency].append({
+          'domain': subdomain['Domain'],
+          'base': subdomain['Base Domain'],
+          'agency_name': domain['agency_name'],
+          'source': source,
+          'https': behavior
+        })
 
       subtotals = total_https_report(eligible)
       del subtotals['grade']  # not measured for subdomains
@@ -700,6 +727,14 @@ def print_report():
       print("%s: %i" % (key, percent(report[report_type][key], eligible)))
     print()
 
+# Convenience: save CSV reports of subdomains per-agency.
+def save_subdomain_reports(subdomain_reports):
+  # Only works for HTTPS right now.
+  for agency in subdomain_reports['https']:
+    print("[https][csv][%s] Saving CSV of agency subdomains." % agency)
+    output = Domain.subdomains_to_csv(subdomain_reports['https'][agency])
+    output_path = os.path.join(SUBDOMAIN_AGENCY_OUTPUT, agency, "https.csv")
+    write(output, output_path)
 
 
 ### utilities
@@ -729,6 +764,17 @@ def mkdir_p(path):
             pass
         else:
             raise
+
+def write(content, destination, binary=False):
+    mkdir_p(os.path.dirname(destination))
+
+    if binary:
+        f = open(destination, 'bw')
+    else:
+        f = open(destination, 'w', encoding='utf-8')
+    f.write(content)
+    f.close()
+
 
 def boolean_for(string):
   if string == "False":
