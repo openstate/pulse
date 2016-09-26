@@ -44,6 +44,7 @@ DOMAINS = os.environ.get("DOMAINS", META["data"]["domains_url"])
 # post-processing and uploading information
 SCANNED_DATA = os.path.join(this_dir, "./output/scan/results")
 CACHE_DATA = os.path.join(this_dir, "./output/scan/cache")
+SUBDOMAIN_DATA = os.path.join(this_dir, "./output/subdomains")
 DB_DATA = os.path.join(this_dir, "./db.json")
 BUCKET_NAME = "pulse.cio.gov"
 
@@ -98,7 +99,6 @@ def run(options):
   elif scan_mode == "download":
     print("Downloading latest production scan data from S3.")
     print()
-    # TODO: also download subdomain data.
     live_scanned = "s3://%s/live/scan/" % (BUCKET_NAME)
     shell_out(["aws", "s3", "sync", live_scanned, SCANNED_DATA])
     print()
@@ -141,19 +141,23 @@ def upload(date):
   live_scanned = "s3://%s/live/scan/" % (BUCKET_NAME)
   live_cached = "s3://%s/live/cache/" % (BUCKET_NAME)
   live_db = "s3://%s/live/db/" % (BUCKET_NAME)
+  live_subdomains = "s3://%s/live/subdomains/" % (BUCKET_NAME)
   archive_scanned = "s3://%s/archive/%s/scan/" % (BUCKET_NAME, date)
   archive_cached = "s3://%s/archive/%s/cache/" % (BUCKET_NAME, date)
   archive_db = "s3://%s/archive/%s/db/" % (BUCKET_NAME, date)
+  archive_subdomains = "s3://%s/archive/%s/subdomains/" % (BUCKET_NAME, date)
 
   acl = "--acl=public-read"
 
   shell_out(["aws", "s3", "sync", SCANNED_DATA, live_scanned, acl])
   shell_out(["aws", "s3", "sync", CACHE_DATA, live_cached, acl])
+  shell_out(["aws", "s3", "sync", SUBDOMAIN_DATA, live_subdomains, acl])
   shell_out(["aws", "s3", "cp", DB_DATA, live_db, acl])
 
   # Ask S3 to do the copying, to save on time and bandwidth
   shell_out(["aws", "s3", "sync", live_scanned, archive_scanned, acl])
   shell_out(["aws", "s3", "sync", live_cached, archive_cached, acl])
+  shell_out(["aws", "s3", "sync", live_subdomains, archive_subdomains, acl])
   shell_out(["aws", "s3", "sync", live_db, archive_db, acl])
 
 

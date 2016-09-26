@@ -107,7 +107,7 @@ $(document).ready(function () {
       return "";
 
     sources.push("For more details, " + l(links.subdomains, "read our methodology") +
-      ", or " + l("test", "download data for this agency") + ".");
+      ", or " + l(agencyDownloadFor(row), "download subdomain data for this agency") + ".");
 
     var p = "<p class=\"indents\">";
     return n("Known public subdomains: ") + p + sources.join("</p>" + p) + "</p>";
@@ -134,6 +134,10 @@ $(document).ready(function () {
     return "https://censys.io/certificates?q=" +
       "parsed.subject.common_name:%22" + domain +
       "%22%20or%20parsed.extensions.subject_alt_name.dns_names:%22" + domain + "%22";
+  };
+
+  var agencyDownloadFor = function(row) {
+    return "https://s3.amazonaws.com/pulse.cio.gov/live/subdomains/agencies/" + row["agency_slug"] + "/https.csv";
   };
 
   // Construct a sentence explaining the HTTP situation.
