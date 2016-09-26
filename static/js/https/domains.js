@@ -110,7 +110,7 @@ $(document).ready(function () {
       ", or " + l("test", "download data for this agency") + ".");
 
     var p = "<p class=\"indents\">";
-    return n("Public subdomains: ") + p + sources.join("</p>" + p) + "</p>";
+    return n("Known public subdomains: ") + p + sources.join("</p>" + p) + "</p>";
   };
 
   var linkGrade = function(data, type, row) {
