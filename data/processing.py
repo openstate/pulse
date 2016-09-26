@@ -361,7 +361,7 @@ def update_agency_totals():
     eligible = Domain.eligible_for_agency(agency['slug'], 'https')
     eligible_https = list(map(lambda w: w['https'], eligible))
     agency_report = total_https_report(eligible_https)
-    agency_report['subdomains'] = total_https_subdomain_report(eligible)
+    # agency_report['subdomains'] = total_https_subdomain_report(eligible)
 
     print("[%s][%s] Adding report." % (agency['slug'], 'https'))
     Agency.add_report(agency['slug'], 'https', agency_report)
