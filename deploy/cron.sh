@@ -7,9 +7,6 @@ export DOMAIN_GATHER_PATH=/opt/scan/domain-scan/gather
 # Read in private credentials. (See data/config.env.example.)
 source $HOME/pulse/$PULSE_ENV/current/data/config.env
 
-# Set the path to the pshtt CLI.
-export PSHTT_PATH=/opt/scan/pshtt/pshtt_cli
-
 # go to pulse environment home
 cd $HOME/pulse/$PULSE_ENV/current
 
