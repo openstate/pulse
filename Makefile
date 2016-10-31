@@ -53,9 +53,14 @@ freeze:
 	mkdir -p $(FREEZE_TO)/data/reports
 	mkdir -p $(FREEZE_TO)/data/domains
 	mkdir -p $(FREEZE_TO)/data/agencies
+
 	curl $(LOCAL)/data/reports/https.json > $(FREEZE_TO)/data/reports/https.json
 	curl $(LOCAL)/data/reports/analytics.json > $(FREEZE_TO)/data/reports/analytics.json
+
 	curl $(LOCAL)/data/domains/https.json > $(FREEZE_TO)/data/domains/https.json
 	curl $(LOCAL)/data/agencies/https.json > $(FREEZE_TO)/data/agencies/https.json
 	curl $(LOCAL)/data/domains/analytics.json > $(FREEZE_TO)/data/domains/analytics.json
 	curl $(LOCAL)/data/agencies/analytics.json > $(FREEZE_TO)/data/agencies/analytics.json
+
+	curl $(LOCAL)/data/domains/https.csv > $(FREEZE_TO)/data/domains/https.csv
+	curl $(LOCAL)/data/domains/analytics.csv > $(FREEZE_TO)/data/domains/analytics.csv

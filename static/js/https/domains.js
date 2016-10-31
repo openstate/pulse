@@ -303,7 +303,7 @@ $(document).ready(function () {
         }
       },
 
-      csv: "/data/domains/https.csv",
+      csv: Utils.frozenURL("/data/domains/https.csv"),
 
       dom: 'LCftrip'
 

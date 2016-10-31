@@ -73,7 +73,7 @@ $(document).ready(function () {
         }
       },
 
-      csv: "/data/domains/analytics.csv",
+      csv: Utils.frozenURL("/data/domains/analytics.csv"),
 
       dom: 'LCftrip'
 
