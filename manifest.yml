@@ -1,0 +1,6 @@
+---
+applications:
+- name: pulse
+  memory: 512M
+  instances: 1
+  buildpack: python_buildpack
