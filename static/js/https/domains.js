@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-  $.get("/data/domains/https.json", function(data) {
+  $.get(Utils.frozenURL("/data/domains/https.json"), function(data) {
     renderTable(data.data);
   });
 

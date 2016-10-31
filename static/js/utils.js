@@ -1,8 +1,19 @@
 var Utils = {
+
+  // convenience storage for whether site is in frozen mode
+  frozen: false,
+
   // ignores the 'type' and 'row' args if sent as datatables callback
 
   percent: function(num, denom) {
     return Math.round((num / denom) * 100);
+  },
+
+  frozenURL: function(url) {
+    if (Utils.frozen)
+      return "/static/frozen" + url;
+    else
+      return url;
   },
 
   progressBar: function(data) {
@@ -75,7 +86,7 @@ var Utils = {
           if (e.keyCode == 13 || e.type == "click") {
             var expanded = $(this).attr('aria-expanded') != "true",
               toggleText = expanded ? "hide" : "show";
-            
+
             $(this).attr('aria-expanded', expanded);
             $(this).attr('aria-label','Select to ' + toggleText + ' additional details about ' + content);
             var self = this;
@@ -84,10 +95,10 @@ var Utils = {
                 $(self).closest('tr')
                   .next('tr.child')
                   .attr('tabindex', '-1')
-                  .focus();  
+                  .focus();
               }, 100)
             }
-            
+
           }
         })
     });

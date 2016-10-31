@@ -51,5 +51,8 @@ data_init:
 # Freeze dynamic endpoint (from a production db) to static locations.
 freeze:
 	mkdir -p $(FREEZE_TO)/data/reports
+	mkdir -p $(FREEZE_TO)/data/domains
 	curl $(LOCAL)/data/reports/https.json > $(FREEZE_TO)/data/reports/https.json
 	curl $(LOCAL)/data/reports/analytics.json > $(FREEZE_TO)/data/reports/analytics.json
+	curl $(LOCAL)/data/domains/https.json > $(FREEZE_TO)/data/domains/https.json
+

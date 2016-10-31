@@ -57,3 +57,8 @@ https://developers.google.com/web/updates/2014/11/Support-for-theme-color-in-Chr
 
 <script src="/static/js/dataTables.lengthLinks.js"></script>
 <script src="/static/js/dataTables.downloads.js"></script>
+
+<!-- signal to JS whether the site is in frozen mode -->
+<script>
+Utils.frozen = {{ frozen | js_bool }};
+</script>

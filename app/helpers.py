@@ -20,19 +20,24 @@ def register(app):
   @app.template_filter('frozen_url')
   def frozen_url(url):
     if frozen:
-      return "static/frozen%s" % url
+      return "/static/frozen%s" % url
     else:
       return url
+
+  # Tiny helper to embed the frozen mode into JS.
+  @app.template_filter('js_bool')
+  def js_bool(value):
+    return str(value).lower()
 
   # Make site metadata available everywhere.
   meta = yaml.safe_load(open("meta.yml"))
   @app.context_processor
   def inject_meta():
       if frozen:
-        last_scan_date = meta["frozen"]["scan_date"]
+        last_scan_date = models.Report.report_time(meta["frozen"]["scan_date"])
       else:
         last_scan_date = scan_date()
-      return dict(site=meta, now=datetime.datetime.utcnow, scan_date=last_scan_date)
+      return dict(site=meta, frozen=frozen, now=datetime.datetime.utcnow, scan_date=last_scan_date)
 
   @app.template_filter('date')
   def datetimeformat(value, format='%H:%M / %d-%m-%Y'):
