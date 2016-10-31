@@ -1,5 +1,6 @@
 import yaml
 import datetime
+import os
 from app import models
 from app.data import FIELD_MAPPING
 
@@ -12,11 +13,26 @@ def register(app):
   def scan_date():
     return models.Report.report_time(models.Report.latest()['report_date'])
 
+  # Is the site in frozen mode?
+  frozen = (os.getenv("FROZEN", "False") == "True")
+
+  # If the site is in frozen mode, use the frozen URL.
+  @app.template_filter('frozen_url')
+  def frozen_url(url):
+    if frozen:
+      return "static/frozen%s" % url
+    else:
+      return url
+
   # Make site metadata available everywhere.
   meta = yaml.safe_load(open("meta.yml"))
   @app.context_processor
   def inject_meta():
-      return dict(site=meta, now=datetime.datetime.utcnow, scan_date=scan_date())
+      if frozen:
+        last_scan_date = meta["frozen"]["scan_date"]
+      else:
+        last_scan_date = scan_date()
+      return dict(site=meta, now=datetime.datetime.utcnow, scan_date=last_scan_date)
 
   @app.template_filter('date')
   def datetimeformat(value, format='%H:%M / %d-%m-%Y'):

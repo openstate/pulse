@@ -47,3 +47,9 @@ data_init:
 	curl https://s3.amazonaws.com/pulse.cio.gov/live/scan/tls.csv > data/output/scan/results/tls.csv
 	curl https://s3.amazonaws.com/pulse.cio.gov/live/scan/meta.json > data/output/scan/results/meta.json
 	curl https://s3.amazonaws.com/pulse.cio.gov/live/db/db.json > data/db.json
+
+# Freeze dynamic endpoint (from a production db) to static locations.
+freeze:
+	mkdir -p $(FREEZE_TO)/data/reports
+	curl $(LOCAL)/data/reports/https.json > $(FREEZE_TO)/data/reports/https.json
+	curl $(LOCAL)/data/reports/analytics.json > $(FREEZE_TO)/data/reports/analytics.json

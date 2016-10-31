@@ -14,3 +14,7 @@ data:
 
   # URL where we download the participating DAP .gov list from.
   analytics_url: https://analytics.usa.gov/data/live/second-level-domains.csv
+
+# Frozen, for now.
+frozen:
+  scan_date: "2016-10-28"
