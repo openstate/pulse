@@ -604,6 +604,8 @@ def shell_out(command, env=None):
         return None
 
 def percent(num, denom):
+  if denom == 0:
+      return 0
   return round((num / denom) * 100)
 
 # mkdir -p in python, from:
