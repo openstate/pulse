@@ -146,12 +146,12 @@ def load_domain_data():
       branch = branch_for(agency_name)
 
       # Exclude cities, counties, tribes, etc.
-      if domain_type != "Federal Agency":
-        continue
+      #if domain_type != "Federal Agency":
+      #  continue
 
       # There are a few erroneously marked non-federal domains.
-      if branch == "non-federal":
-        continue
+      #if branch == "non-federal":
+      #  continue
 
       if domain_name not in domain_map:
         domain_map[domain_name] = {
@@ -624,29 +624,30 @@ def boolean_for(string):
     return True
 
 def branch_for(agency):
-  if agency in [
-    "Library of Congress",
-    "The Legislative Branch (Congress)",
-    "Government Printing Office",
-    "Government Publishing Office",
-    "Congressional Office of Compliance",
-    "Stennis Center for Public Service",
-    "U.S. Capitol Police"
-  ]:
-    return "legislative"
+  #if agency in [
+  #  "Library of Congress",
+  #  "The Legislative Branch (Congress)",
+  #  "Government Printing Office",
+  #  "Government Publishing Office",
+  #  "Congressional Office of Compliance",
+  #  "Stennis Center for Public Service",
+  #  "U.S. Capitol Police"
+  #]:
+  #  return "legislative"
 
-  if agency in [
-    "The Judicial Branch (Courts)",
-    "The Supreme Court",
-    "U.S Courts"
-  ]:
-    return "judicial"
+  #if agency in [
+  #  "The Judicial Branch (Courts)",
+  #  "The Supreme Court",
+  #  "U.S Courts"
+  #]:
+  #  return "judicial"
 
-  if agency in ["Non-Federal Agency"]:
-    return "non-federal"
+  #if agency in ["Non-Federal Agency"]:
+  #  return "non-federal"
 
-  else:
-    return "executive"
+  #else:
+    #return "executive"
+  return "executive"
 
 ### Run when executed.
 
