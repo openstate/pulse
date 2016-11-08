@@ -44,9 +44,10 @@ DB_DATA = os.path.join(this_dir, "./db.json")
 BUCKET_NAME = "pulse.cio.gov"
 
 # domain-scan information
-SCAN_TARGET = os.path.join(this_dir, "./output/scan")
+SCAN_TARGET = os.path.join("/output/scan")
 SCAN_COMMAND = os.environ.get("DOMAIN_SCAN_PATH", None)
 SCANNERS = os.environ.get("SCANNERS", "pshtt,analytics,sslyze,inspect,tls")
+#SCANNERS = os.environ.get("SCANNERS", "pshtt,sslyze,inspect,tls")
 ANALYTICS_URL = os.environ.get("ANALYTICS_URL", META["data"]["analytics_url"])
 
 # Options:
@@ -137,20 +138,21 @@ def scan():
   analytics = "--analytics=%s" % ANALYTICS_URL
   output = "--output=%s" % SCAN_TARGET
 
-  shell_out([
-    SCAN_COMMAND, DOMAINS,
-    scanners, analytics, output,
-    "--debug",
-    "--force",
-    "--sort",
-    #"--serial",
-  ])
+  shell_out(
+      "%s %s %s %s %s --debug --force --sort" % (
+          SCAN_COMMAND,
+          DOMAINS,
+          scanners,
+          analytics,
+          output
+      )
+  )
 
 
 def shell_out(command, env=None):
     try:
-        print("[cmd] %s" % str.join(" ", command))
-        response = subprocess.check_output(command, shell=False, env=env)
+        print("[cmd] %s" % command)
+        response = subprocess.check_output(command, shell=True)
         output = str(response, encoding='UTF-8')
         print(output)
         return output
