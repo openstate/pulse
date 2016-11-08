@@ -1,4 +1,5 @@
 /data/output
+/data/cache
 /data/*.json
 db.json
 .env
@@ -26,3 +27,6 @@ pip-delete-this-directory.txt
 pip-selfcheck.json
 
 todo.txt
+
+# Vim
+*.swp
