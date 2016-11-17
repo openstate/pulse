@@ -12,8 +12,11 @@ RUN apt-get update
 RUN apt-get install -y docker-engine
 
 WORKDIR /opt/pulse
+
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 RUN gem install sass bourbon neat bitters
+
 EXPOSE 5000
+
 CMD make debug
