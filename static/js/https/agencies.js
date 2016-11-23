@@ -68,7 +68,12 @@ $(document).ready(function () {
         "oPaginate": {
           "sPrevious": "<<",
           "sNext": ">>"
-        }
+        },
+        "sInfo": "_START_ tot _END_ van _TOTAL_ overheden",
+        "sInfoEmpty": "Geen overheden beschikbaar",
+        "sInfoThousands": ".",
+        "sLengthMenu": 'Toon _MENU_ overheden',
+        "sSearch": "Zoeken:"
       },
 
       dom: 'Lftrip'

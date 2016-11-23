@@ -1,8 +1,8 @@
 {% extends "layout.html" %}
 
 {% block page_id %}https{% endblock %}
-{% block title %}Secure HTTP (HTTPS) - Pulse{% endblock %}
-{% block description %}How federal government domains are doing at deploying HTTPS.{% endblock %}
+{% block title %}Veilig HTTP (HTTPS) - Pulse{% endblock %}
+{% block description %}De stand van zaken rondom HTTPS bij overheidsdomeinen{% endblock %}
 
 {% block content %}
 
@@ -11,24 +11,24 @@
 <section id="main-content" class="white-bkg">
 
   <nav class="tab-menu" role="tablist">
-    <span class="tab" role="tab" aria-controls="tab-panel" aria-selected="true">By Domain</span>
-    <a href="/https/agencies/" class="tab" role="tab" aria-controls="tab-panel" aria-selected="false">By Agency</a>
-    <a href="/https/guidance/" class="tab" role="tab" aria-controls="tab-panel" aria-selected="false">Guidance</a>
+    <span class="tab" role="tab" aria-controls="tab-panel" aria-selected="true">Per Domein</span>
+    <a href="/https/agencies/" class="tab" role="tab" aria-controls="tab-panel" aria-selected="false">Per Overheid</a>
+    <a href="/https/guidance/" class="tab" role="tab" aria-controls="tab-panel" aria-selected="false">Informatie</a>
   </nav>
 
   <div id="tab-panel" class="wrapper" role="tabpanel" aria-hidden="false">
     <table class="domain responsive https">
-      <caption>Secure HTTP(S) By Domain. Table is sortable via first row table headers. Each row contains a domain and related attributes.</caption>
+      <caption>Veilig HTTP(S) Per Domein. Tabel is sorteerbaar door op de kolomnamen bovenaan de klikken. Elke rij bevat een domain en gerelateerde attributen.</caption>
       <thead>
         <tr>
-          <th class="all">Domain</th>
+          <th class="all">Domein</th>
           <th class="never">Canonical</th>
           <th class="never">Agency</th>
-          <th class="min-tablet">Uses HTTPS</th>
-          <th class="min-tablet">Enforces HTTPS</th>
+          <th class="min-tablet">Ondersteunt HTTPS</th>
+          <th class="min-tablet">Dwingt HTTPS Af</th>
           <th class="min-tablet-l">Strict Transport Security (HSTS)</th>
-          <th class="min-tablet-l">Preloaded (recommended)</th>
-          <th class="min-tablet-l">SSL Labs Grade</th>
+          <th class="min-tablet-l">Preloaded (aanbevolen)</th>
+          <th class="min-tablet-l">SSL Labs Klasse</th>
           <th class="none" scope="col"></th>
         </tr>
       </thead>

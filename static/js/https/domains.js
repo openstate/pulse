@@ -16,30 +16,30 @@ $(document).ready(function () {
 
   var names = {
     uses: {
-      "-1": "No",
-      0: "No",  // Downgrades HTTPS -> HTTP
-      1: "Yes", // (with certificate chain issues)
-      2: "Yes"
+      "-1": "Nee",
+      0: "Nee",  // Downgrades HTTPS -> HTTP
+      1: "Ja", // (with certificate chain issues)
+      2: "Ja"
     },
 
     enforces: {
       0: "", // N/A (no HTTPS)
-      1: "No", // Present, not default
-      2: "Yes", // Defaults eventually to HTTPS
-      3: "Yes" // Defaults eventually + redirects immediately
+      1: "Nee", // Present, not default
+      2: "Ja", // Defaults eventually to HTTPS
+      3: "Ja" // Defaults eventually + redirects immediately
     },
 
     hsts: {
       "-1": "", // N/A
-      0: "No",  // No
-      1: "No", // No, HSTS with short max-age (for canonical endpoint)
-      2: "Yes" // Yes, HSTS for >= 1 year (for canonical endpoint)
+      0: "Nee",  // No
+      1: "Nee", // No, HSTS with short max-age (for canonical endpoint)
+      2: "Ja" // Yes, HSTS for >= 1 year (for canonical endpoint)
     },
 
     preloaded: {
       0: "",  // No (don't display, since it's optional)
-      1: "Ready",  // Preload-ready
-      2: "Yes"  // Yes
+      1: "Gereed",  // Preload-ready
+      2: "Ja"  // Yes
     },
 
     grade: {
@@ -100,18 +100,18 @@ $(document).ready(function () {
     if (row.https.grade >= 0) {
 
       if (row.https.sig == "SHA1withRSA")
-        tls.push("Certificate uses a " + l("sha1", "weak SHA-1 signature"));
+        tls.push("Certificaat gebruikt een " + l("sha1", "zwakke SHA-1 signature"));
 
       if (row.https.ssl3 == true)
-        tls.push("Supports the " + l("ssl3", "insecure SSLv3 protocol"));
+        tls.push("Ondersteunt het " + l("ssl3", "onveilige SSLv3 protocol"));
 
       if (row.https.tls12 == false)
-        tls.push("Lacks support for the " + l("tls12", "most recent version of TLS"));
+        tls.push("Geen ondersteuning voor de " + l("tls12", "meest recente versie van TLS"));
     }
 
     // Though not found through SSL Labs, this is a TLS issue.
     if (https == 1)
-      tls.push("Certificate chain not valid for all public clients. See " + l(labsUrlFor(row.canonical), "SSL Labs") + " for details.");
+      tls.push("Certificate chain niet geldig voor alle publieke clients. Bekijk " + l(labsUrlFor(row.canonical), "SSL Labs") + " voor details.");
 
     // Non-urgent TLS details.
     var tlsDetails = "";
@@ -119,7 +119,7 @@ $(document).ready(function () {
       if (tls.length > 0)
         tlsDetails += tls.join(". ") + ".";
       else if (grade < 6)
-        tlsDetails += l(labsUrlFor(row.canonical), "Review SSL Labs report") + " to resolve TLS quality issues.";
+        tlsDetails += l(labsUrlFor(row.canonical), "Bekijk SSL Labs rapport") + " om TLS kwaliteitsproblemen op te lossen.";
     }
 
     // Principles of message crafting:
@@ -141,13 +141,13 @@ $(document).ready(function () {
         (https >= 1) && (behavior >= 2) &&
         (hsts == 2) && (preloaded == 2) &&
         (tls.length == 0) && (grade == 6))
-      details = g("Perfect score! HTTPS is strictly enforced throughout the zone.");
+      details = g("Perfecte score! HTTPS wordt strikt afgedwongen in de hele zone.");
 
     // CASE: Only issue is TLS quality issues.
     else if (
         (https >= 1) && (behavior >= 2) &&
         (hsts == 2) && (preloaded == 2)) {
-      details = g("Almost perfect!") + " " + tlsDetails;
+      details = g("Bijna perfect!") + " " + tlsDetails;
       // Override F grade override.
       urgent = false;
     }
@@ -156,49 +156,49 @@ $(document).ready(function () {
     else if (
         (https >= 1) && (behavior >= 2) &&
         (hsts < 1) && (preloaded == 2))
-      details = n("Caution:") + " Domain is preloaded, but HSTS header is missing. This may " + l("stay_preloaded", "cause the domain to be un-preloaded") + ".";
+      details = n("Let op:") + " Domein is gepreload, maar HSTS header ontbreekt. Hierdoor " + l("stay_preloaded", "kan het preloaden van het domein ongedaan gemaakt worden") + ".";
 
     // CASE: HTTPS+HSTS, preload-ready but not preloaded.
     else if (
         (https >= 1) && (behavior >= 2) &&
         (hsts == 2) && (preloaded == 1))
-      details = g("Almost there! ") + "Domain is ready to be " + l("submit", "submitted to the HSTS preload list") + ".";
+      details = g("Bijna! ") + "Domein is gereed om " + l("submit", "toe te voegen aan de HSTS preload lijst") + ".";
 
     // CASE: HTTPS+HSTS (M-15-13 compliant), but no preloading.
     else if (
         (https >= 1) && (behavior >= 2) &&
         (hsts == 2) && (preloaded == 0))
-      details = g("HTTPS enforced. ") + n(l("preload", "Consider preloading this domain")) + " to enforce HTTPS across the entire zone.";
+      details = g("HTTPS afgedwongen. ") + n("Overweeg dit domein te preloaden") + " om HTTPS over het gehele zone af te dwingen.";
 
     // CASE: HSTS, but HTTPS not enforced.
     else if ((https >= 1) && (behavior < 2) && (hsts == 2))
-      details = n("Caution:") + " Domain uses " + l("hsts", "HSTS") + ", but is not redirecting clients to HTTPS.";
+      details = n("Let op:") + " Domein gebruikt " + l("hsts", "HSTS") + ", maar redirect clients niet naar HTTPS.";
 
     // CASE: HTTPS w/valid chain supported and enforced, weak/no HSTS.
     else if ((https == 2) && (behavior >= 2) && (hsts < 2)) {
       if (hsts == 0)
-        details = n("Almost:") + " Enable " + l("hsts", "HSTS") + " so that clients can enforce HTTPS.";
+        details = n("Bijna:") + " Schakel " + l("hsts", "HSTS") + " in zodat clients HTTPS kunnen afdwingen.";
       else if (hsts == 1)
-        details = n("Almost:") + " The " + l("hsts", "HSTS") + " max-age (" + hsts_age + " seconds) is too short, and should be increased to at least 1 year (31536000 seconds).";
+        details = n("Bijna:") + " De " + l("hsts", "HSTS") + " max-age (" + hsts_age + " seconden) is te kort, en moet worden verhoogd tot ten minste 1 jaar (31536000 seconden).";
     }
 
     // CASE: HTTPS w/invalid chain supported and enforced, no HSTS.
     else if ((https == 1) && (behavior >= 2) && (hsts < 2))
-      details = n("Almost:") + " Domain is missing " + l("hsts", "HSTS") + ", but the presented certificate chain may not be valid for all public clients. HSTS prevents users from clicking through certificate warnings. See " + l(labsUrlFor(row.canonical), "the SSL Labs report") + " for details.";
+      details = n("Bijna:") + l("hsts", "HSTS") + "ontbreekt op het domein, maar de certificate chain kan niet geldig zijn voor alle publieke clients. HSTS verhindert dat gebruikers certificaatwaarschuwingen wegklikken. Bekijk " + l(labsUrlFor(row.canonical), "het SSL Labs rapport") + " voor details.";
 
     // CASE: HTTPS supported, not enforced, no HSTS.
     else if ((https >= 1) && (behavior < 2) && (hsts < 2))
-      details = "HTTPS supported, but not enforced.";
+      details = "HTTPS ondersteund, maar niet afgedwongen.";
 
     // CASE: HTTPS downgrades.
     else if (https == 0)
-      details = "HTTPS redirects visitors down to HTTP."
+      details = "HTTPS redirect bezoekers terug naar HTTP."
 
     // CASE: HTTPS isn't supported at all.
     else if (https == -1)
       // TODO SUBCASE: It's a "redirect domain".
       // SUBCASE: Everything else.
-      details = "No support for HTTPS."
+      details = " Geen HTTPS ondersteuning."
 
     else
       details = "";
@@ -206,17 +206,17 @@ $(document).ready(function () {
     // If there's an F grade, and TLS details weren't already included,
     // add an urgent warning.
     if (urgent)
-      return details + " " + w("Warning: ") + l(labsUrlFor(row.canonical), "review SSL Labs report") + " to resolve TLS quality issues."
+      return details + " " + w("Waarschuwing: ") + l(labsUrlFor(row.canonical), "bekijk SSL Labs rapport") + " om TLS kwaliteitsproblemen op te lossen."
     else
       return details;
   };
 
   var links = {
-    hsts: "https://https.cio.gov/hsts/",
-    sha1: "https://https.cio.gov/technical-guidelines/#signature-algorithms",
-    ssl3: "https://https.cio.gov/technical-guidelines/#ssl-and-tls",
-    tls12: "https://https.cio.gov/technical-guidelines/#ssl-and-tls",
-    preload: "https://https.cio.gov/hsts/#hsts-preloading",
+    hsts: "https://www.ncsc.nl/actueel/factsheets/factsheet-https-kan-een-stuk-veiliger.html",
+    sha1: "https://www.ncsc.nl/actueel/factsheets/factsheet-https-kan-een-stuk-veiliger.html",
+    ssl3: "https://www.ncsc.nl/actueel/whitepapers/ict-beveiligingsrichtlijnen-voor-transport-layer-security-tls.html",
+    tls12: "https://www.ncsc.nl/actueel/whitepapers/ict-beveiligingsrichtlijnen-voor-transport-layer-security-tls.html",
+    preload: "https://www.ncsc.nl/",
     stay_preloaded: "https://hstspreload.appspot.com/#continued-requirements",
     submit: "https://hstspreload.appspot.com"
   };
@@ -300,7 +300,12 @@ $(document).ready(function () {
         "oPaginate": {
           "sPrevious": "<<",
           "sNext": ">>"
-        }
+        },
+        "sInfo": "_START_ tot _END_ van _TOTAL_ domeinen",
+        "sInfoEmpty": "Geen domeinen beschikbaar",
+        "sInfoThousands": ".",
+        "sLengthMenu": 'Toon _MENU_ domeinen',
+        "sSearch": "Zoeken:"
       },
 
       csv: "/data/domains/https.csv",

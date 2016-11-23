@@ -6,17 +6,17 @@
   </div>
 
   <div class="description">
-    <h2>Secure HTTP (HTTPS)</h2>
-    <h3>Last updated <strong>{{ scan_date | date("%B %d, %Y") }}</strong></h3>
+    <h2>Veilig HTTP (HTTPS)</h2>
+    <h3>Laatst bijgwerkt <strong>{{ scan_date | date("%B %d, %Y") }}</strong></h3>
     <p>
-       This data measures whether federal domains support the HTTPS protocol (<code>https://</code>), and the strength of that support. HTTPS provides a secure connection across the internet between websites and their visitors, and is becoming the new baseline for public web services. As part of this shift, the U.S. federal government is in the process of transitioning <a href="https://https.cio.gov">entirely to HTTPS</a>.
+    Deze data laat zien of overheidsdomeinen ondersteuning bieden voor het HTTPS protocol (<code>https://</code>) en hoe sterk de implementatie daarvan is. HTTPS zorgt voor een veilige internetverbinding tussen websites en haar bezoekers. Voor overheidswebsites wordt <a href="https://www.forumstandaardisatie.nl/standaard/https">HTTPS aanbevolen</a> en het onderliggende protocol <a href="https://www.forumstandaardisatie.nl/standaard/tls">TLS is verplicht</a>.
     </p>
     <p>
-      Note that HTTPS generally <strong>does not affect</strong> whether a website is vulnerable to hacking. For more information on what HTTPS does (and doesn't do), <a href="https://https.cio.gov/faq/">visit the HTTPS FAQ</a>.
+      HTTPS heeft over het algemeen geen invloed op de mate waarin een website te hacken is. Voor meer informatie over wat HTTPS wel en niet doet, zie deze <a href="https://www.ncsc.nl/actueel/factsheets/factsheet-https-kan-een-stuk-veiliger.html">HTTPS factsheet</a> en <a href="https://www.ncsc.nl/actueel/whitepapers/ict-beveiligingsrichtlijnen-voor-transport-layer-security-tls.html">TLS whitepaper</a> van het NCSC.
     </p>
 
     <p>
-      HTTPS and TLS data was last collected through a scan of the public internet on <strong>{{ scan_date | date("%B %d, %Y") }}</strong>.
+      HTTPS en TLS data zijn voor het laatst verzameld door middel van een scan van het publieke internet op <strong>{{ scan_date | date("%d %B %Y") }}</strong>.
     </p>
   </div>
 

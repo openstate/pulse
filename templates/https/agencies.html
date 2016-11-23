@@ -1,8 +1,8 @@
 {% extends "layout.html" %}
 
 {% block page_id %}https{% endblock %}
-{% block title %}Secure HTTP (HTTPS) - Pulse{% endblock %}
-{% block description %}How federal government domains are doing at deploying HTTPS.{% endblock %}
+{% block title %}Veilig HTTP (HTTPS) - Pulse{% endblock %}
+{% block description %}De stand van zaken rondom HTTPS bij overheidsdomeinen{% endblock %}
 
 {% block content %}
 
@@ -11,22 +11,22 @@
 <section id="main-content" class="white-bkg">
 
   <nav class="tab-menu" role="tablist">
-    <a href="/https/domains/" class="tab" role="tab" aria-controls="tab-panel" aria-selected="false">By Domain</a>
-    <span class="tab" role="tab" aria-controls="tab-panel" aria-selected="true">By Agency</span>
-    <a href="/https/guidance/" class="tab" role="tab" aria-controls="tab-panel" aria-selected="false">Guidance</a>
+    <a href="/https/domains/" class="tab" role="tab" aria-controls="tab-panel" aria-selected="false">Per Domein</a>
+    <span class="tab" role="tab" aria-controls="tab-panel" aria-selected="true">Per Overheid</span>
+    <a href="/https/guidance/" class="tab" role="tab" aria-controls="tab-panel" aria-selected="false">Informatie</a>
   </nav>
 
   <div id="tab-panel" class="wrapper" role="tabpanel" aria-hidden="false">
     <table class="agency responsive https">
-      <caption>Secure HTTP(S) By Agency. Table is sortable via first row table headers. Each row contains an agency and related attributes.</caption>
+      <caption>Veilig HTTP(S) Per Overheid. Tabel is sorteerbaar door op de kolomnamen bovenaan de klikken. Elke rij bevat een overheid en gerelateerde attributen.</caption>
       <thead>
         <tr>
-          <th class="all" scope="col">Agency</th>
-          <th class="all" scope="col">No. of Domains</th>
-          <th class="min-tablet" scope="col">Uses HTTPS</th>
-          <th class="min-tablet" scope="col">Enforces HTTPS</th>
+          <th class="all" scope="col">Overheid</th>
+          <th class="all" scope="col">Aantal Domeinen</th>
+          <th class="min-tablet" scope="col">Ondersteunt HTTPS</th>
+          <th class="min-tablet" scope="col">Dwingt HTTPS Af</th>
           <th class="desktop" scope="col">Strict Transport Security (HSTS)</th>
-          <th class="desktop" scope="col">SSL Labs (A- or higher)</th>
+          <th class="desktop" scope="col">SSL Labs (A- of hoger)</th>
         </tr>
       </thead>
     </table>
