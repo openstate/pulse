@@ -1,23 +1,25 @@
-<header class="chart">
+<div class="big-header">
+  <header class="chart">
 
-  <div class="donut">
-    <div class="https_chart"></div>
-    {% include 'includes/https/donut.html' %}
-  </div>
+    <div class="donut">
+      <div class="https_chart"></div>
+      {% include 'includes/https/donut.html' %}
+    </div>
 
-  <div class="description">
-    <h2>Veilig HTTP (HTTPS)</h2>
-    <h3>Laatst bijgwerkt <strong>{{ scan_date | date("%B %d, %Y") }}</strong></h3>
-    <p>
-    Deze data laat zien of overheidsdomeinen ondersteuning bieden voor het HTTPS protocol (<code>https://</code>) en hoe sterk de implementatie daarvan is. HTTPS zorgt voor een veilige internetverbinding tussen websites en haar bezoekers. Voor overheidswebsites wordt <a href="https://www.forumstandaardisatie.nl/standaard/https">HTTPS aanbevolen</a> en het onderliggende protocol <a href="https://www.forumstandaardisatie.nl/standaard/tls">TLS is verplicht</a>.
-    </p>
-    <p>
-      HTTPS heeft over het algemeen geen invloed op de mate waarin een website te hacken is. Voor meer informatie over wat HTTPS wel en niet doet, zie deze <a href="https://www.ncsc.nl/actueel/factsheets/factsheet-https-kan-een-stuk-veiliger.html">HTTPS factsheet</a> en <a href="https://www.ncsc.nl/actueel/whitepapers/ict-beveiligingsrichtlijnen-voor-transport-layer-security-tls.html">TLS whitepaper</a> van het NCSC.
-    </p>
+    <div class="description">
+      <h2>Veilig HTTP (HTTPS)</h2>
+      <h3>Laatst bijgwerkt <strong>{{ scan_date | date("%d-%m-%Y") }}</strong></h3>
+      <p>
+      Deze data laat zien of overheidsdomeinen ondersteuning bieden voor het HTTPS protocol (<code>https://</code>) en hoe sterk de implementatie daarvan is. HTTPS zorgt voor een veilige internetverbinding tussen websites en haar bezoekers. Voor overheidswebsites wordt <a href="https://www.forumstandaardisatie.nl/standaard/https">HTTPS aanbevolen</a> en het onderliggende protocol <a href="https://www.forumstandaardisatie.nl/standaard/tls">TLS is verplicht</a>.
+      </p>
+      <p>
+        HTTPS heeft over het algemeen geen invloed op de mate waarin een website te hacken is. Voor meer informatie over wat HTTPS wel en niet doet, zie deze <a href="https://www.ncsc.nl/actueel/factsheets/factsheet-https-kan-een-stuk-veiliger.html">HTTPS factsheet</a> en <a href="https://www.ncsc.nl/actueel/whitepapers/ict-beveiligingsrichtlijnen-voor-transport-layer-security-tls.html">TLS whitepaper</a> van het NCSC.
+      </p>
 
-    <p>
-      HTTPS en TLS data zijn voor het laatst verzameld door middel van een scan van het publieke internet op <strong>{{ scan_date | date("%d %B %Y") }}</strong>.
-    </p>
-  </div>
+      <p>
+        HTTPS en TLS data zijn voor het laatst verzameld door middel van een scan van het publieke internet op <strong>{{ scan_date | date("%d-%m-%Y") }}</strong>.
+      </p>
+    </div>
 
-</header>
+  </header>
+</div>
