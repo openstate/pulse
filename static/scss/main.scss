@@ -3,6 +3,7 @@
 // Imports
 /////////////////////////////////////////
 
+@import 'https://fonts.googleapis.com/css?family=Montserrat|Source+Code+Pro';
 @import "lib/bourbon/bourbon";
 @import "base/grid-settings";
 @import "lib/neat/neat";
@@ -37,39 +38,102 @@ p  { font-size:   1.0em;    }
 /////////////////////////////////////////
 
 body {
-  background-color: $medium-blue;
+  background-color: $light-gray;
 }
 
 a {
-  color: white;
+  color: black;
   font-weight: 900;
 
   &:active {
-    color: white;
+    color: black;
   }
   &:hover {
-    color: white;
+    color: black;
     text-decoration: underline;
   }
   &:focus {
-    color: white;
+    color: black;
     outline: dotted 1px;
     text-decoration: underline;
   }
   &:visited {
-    color: white;
+    color: black;
   }
 }
 
+nav li a {
+  font-size: 18px;
+  font-weight: normal !important;
+}
+
+.ul-normal {
+  list-style-type: disc;
+  margin: 14px 0;
+  padding-left: 40px;
+}
+
+.list-inline li {
+  display: inline;
+}
+
+header {
+  background-color: white;
+}
+
 footer {
-  border-top: 1px solid $dark-blue;
-  color: white;
-  padding: 15px 20px;
+  border-top: 1px solid $light-gray;
+  color: black;
+  padding: 30px 20px;
   text-align: center;
 }
 
+.footer-text {
+  width: 30%;
+  float: left; }
+
+.footer-contact {
+  float: left;
+  margin-left: 8%;
+  padding: 20px 0;
+  color: rgb(128, 128, 128) !important;
+  width: 30%; }
+
+.footer-contact li {
+  margin: 5px; }
+
+.footer-item {
+  text-align: left;
+  float: right; }
+
+.footer-item h2 {
+  margin-bottom: 10px; }
+
+.footer-item a {
+  width: 200px;
+  font-weight: 400;
+  display: inline-block; }
+
+.footer-item img {
+  float: left; }
+
+.osf-logo {
+  padding-right: 15px;
+  width: 115px; }
+
+@media screen and (max-width: 767px) {
+  .footer-text, .footer-contact, .footer-item {
+    margin-left: 10%;
+    width: 80%;
+    float: none; }
+
+  .footer-item {
+    width: 30%;
+    margin: 0 auto; }
+}
+
 .button {
-  border: 1px solid white;
+  border: 1px solid black;
   color: white;
   padding: 10px;
   text-align: center;
@@ -120,9 +184,16 @@ a#skipnav {
 
   #content {
 
-    > header {
+    .big-header {
+      font-family: $font-family-monospace;
+      background-color: rgb(242, 242, 242);
+      padding-bottom: 40px;
+    }
+
+    header {
       @include outer-container;
-      color: white;
+      background-color: $light-gray;
+      color: $dark-gray;
       padding: 30px 0;
 
       p {
@@ -131,7 +202,6 @@ a#skipnav {
 
       a {
         font-weight: bold;
-        color: white;
       }
 
       .donut {
@@ -167,7 +237,6 @@ a#skipnav {
 
       .tab-menu {
         width: 100%;
-        margin-top: 40px;
 
         .tab {
           width: 33.33%;
@@ -179,13 +248,13 @@ a#skipnav {
         }
 
         a.tab {
-          background-color: $medium-blue;
-          color: white;
+          background-color: $light-gray;
+          color: black;
 
           &:hover,
           &:focus {
-            background-color: lighten($medium-blue, 10%);
-            color: white;
+            background-color: darken($light-gray, 10%);
+            color: black;
           }
         }
       }
@@ -195,7 +264,7 @@ a#skipnav {
 
         a {
           color: $light-blue;
-          font-weight: 900;
+          font-weight: normal;
 
           &:hover,
           &:focus {

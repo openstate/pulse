@@ -1,6 +1,7 @@
 // Typography
-$base-font-family: "Lato", Helvetica, sans-serif;
+$base-font-family: 'Montserrat', sans-serif !default;
 $heading-font-family: $base-font-family;
+$font-family-monospace: 'Source Code Pro', monospace !default;
 
 // Font Sizes
 $base-font-size: 0.875em;
@@ -16,9 +17,9 @@ $small-spacing: $base-spacing / 2;
 $base-z-index: 0;
 
 // Colors
-$dark-gray: #4A4A4A;
+$dark-gray: #3D4A4C;
 $medium-gray: #999;
-$light-gray: #ddd;
+$light-gray: #F2F2F2;
 
 // Font Colors
 $base-background-color: white;

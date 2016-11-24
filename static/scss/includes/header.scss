@@ -2,6 +2,7 @@
 /////////////////////////////////////////
 
 .site-header {
+  max-height: 50px;
 
   .disclaimer {
     background-color: $dark-blue;
@@ -33,7 +34,7 @@
   }
 
   > nav {
-    border-bottom: 1px solid $dark-blue;
+    border-bottom: 4px solid $light-gray;
 
     #main-nav {
       padding: 10px 0;
@@ -44,7 +45,7 @@
       @include outer-container;
 
       a {
-        color: white;
+        color: black;
       }
 
       h1#branding {
@@ -59,7 +60,6 @@
 
       ul {
         float: right;
-        margin-top: 6px;
 
         @include media($medium) {
           display: none;
@@ -72,8 +72,9 @@
             padding: 17px 24px;
 
             &:hover {
-              background-color: white;
-              color: $medium-blue;
+              background-color: $light-gray;
+              text-decoration: normal !important;
+              color: black;
             }
           }
         }
