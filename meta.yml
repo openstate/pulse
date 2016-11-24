@@ -9,7 +9,7 @@ description: "De stand van zaken rondom HTTPS bij overheidsdomeinen."
 # Data source URLs. They shouldn't require manual updates.
 data:
   # URL where we download the .gov domain list from.
-  domains_url: https://raw.githubusercontent.com/openstate/datasets/master/websites-overheid.csv
+  domains_url: https://raw.githubusercontent.com/openstate/datasets/master/government_domain_names/domains.csv
 
   # URL where we download the participating DAP .gov list from.
   analytics_url: https://analytics.usa.gov/data/live/second-level-domains.csv
