@@ -185,6 +185,7 @@ a#skipnav {
   #content {
 
     .big-header {
+      margin-top: 54px;
       font-family: $font-family-monospace;
       background-color: rgb(242, 242, 242);
       padding-bottom: 40px;
@@ -245,6 +246,14 @@ a#skipnav {
           text-align: center;
           padding: 30px 0;
           font-size: 1.5em;
+        }
+
+        // 431px because 'Per overheid' wraps at that moment and thus we
+        // need to increase the height to 123px XD
+        @media screen and (max-width: 431px) {
+          .tab {
+            height: 123px;
+          }
         }
 
         a.tab {

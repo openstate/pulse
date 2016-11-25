@@ -184,7 +184,7 @@ $(document).ready(function () {
 
     // CASE: HTTPS w/invalid chain supported and enforced, no HSTS.
     else if ((https == 1) && (behavior >= 2) && (hsts < 2))
-      details = n("Bijna:") + l("hsts", "HSTS") + "ontbreekt op het domein, maar de certificate chain kan niet geldig zijn voor alle publieke clients. HSTS verhindert dat gebruikers certificaatwaarschuwingen wegklikken. Bekijk " + l(labsUrlFor(row.canonical), "het SSL Labs rapport") + " voor details.";
+      details = n("Bijna: ") + l("hsts", "HSTS") + " ontbreekt op het domein, maar de certificate chain kan niet geldig zijn voor alle publieke clients. HSTS verhindert dat gebruikers certificaatwaarschuwingen wegklikken. Bekijk " + l(labsUrlFor(row.canonical), "het SSL Labs rapport") + " voor details.";
 
     // CASE: HTTPS supported, not enforced, no HSTS.
     else if ((https >= 1) && (behavior < 2) && (hsts < 2))

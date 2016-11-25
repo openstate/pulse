@@ -4,6 +4,14 @@
 .site-header {
   max-height: 50px;
 
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50px;
+  z-index: 999;
+
   .disclaimer {
     background-color: $dark-blue;
     color: white;
@@ -37,6 +45,7 @@
     border-bottom: 4px solid $light-gray;
 
     #main-nav {
+      max-height: 50px;
       padding: 10px 0;
 
       @include media($large) {
