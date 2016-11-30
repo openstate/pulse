@@ -281,7 +281,7 @@ footer {
     margin: 0 auto; } }
 .button {
   border: 1px solid black;
-  color: white;
+  color: black;
   padding: 10px;
   text-align: center;
   text-transform: uppercase; }
@@ -528,8 +528,10 @@ a#skipnav {
 
 .https_chart,
 .dap_chart {
-  cursor: pointer;
   padding-top: 15px; }
+
+svg {
+  cursor: pointer; }
 
 .sr-only {
   left: -10000px;
