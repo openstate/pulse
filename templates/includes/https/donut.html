@@ -15,6 +15,10 @@
     var color = d3.scale.ordinal()
         .range(["#7ED321", "#FFFFFF"]);
 
+    if ($('#home').length) {
+        var color = d3.scale.ordinal().range(["#7ED321", "#F2F2F2"]);
+    }
+
     var arc = d3.svg.arc()
         .outerRadius(radius)
         .innerRadius(radius - 40);

@@ -23,8 +23,8 @@ $xlarge:      new-breakpoint(max-width 1200px, 12);
 $dark-blue:       darken(#0066CC, 20%);
 $medium-blue:     darken(#0066CC, 5%);
 $light-blue:      #0066CC;
-$green:          #2da52d;
-$red:      #ca1b1b;
+$green:           #2da52d;
+$red:             #ca1b1b;
 
 // Custom font sizing
 /////////////////////////////////////////
@@ -128,8 +128,9 @@ footer {
     float: none; }
 
   .footer-item {
-    width: 30%;
-    margin: 0 auto; }
+    width: 61%;
+    margin: 0 auto;
+  }
 }
 
 .button {

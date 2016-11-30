@@ -277,7 +277,7 @@ footer {
     float: none; }
 
   .footer-item {
-    width: 30%;
+    width: 61%;
     margin: 0 auto; } }
 .button {
   border: 1px solid black;
@@ -681,69 +681,24 @@ a#skipnav {
   font-size: 1.5em; }
 
 #home .hero {
+  background-color: #F2F2F2;
   color: black;
-  padding-top: 40px;
-  text-align: center;
-  float: left;
-  display: block;
-  margin-right: 2.35765%;
-  width: 65.88078%;
-  margin-left: 17.05961%; }
-  #home .hero:last-child {
-    margin-right: 0; }
+  padding: 70px 15px 20px 15px;
+  text-align: center; }
   #home .hero h2 {
-    font-size: 6.125em;
-    font-weight: 300; }
+    font-size: 2.625em;
+    font-weight: 900; }
   #home .hero h3 {
     font-family: "Source Code Pro", monospace !important;
     font-size: 1.75em;
-    font-weight: 100;
-    padding-top: 15px; }
+    font-weight: 100; }
 #home #results {
-  padding: 30px 0;
-  float: left;
-  display: block;
-  margin-right: 2.35765%;
-  width: 65.88078%;
-  margin-left: 17.05961%; }
-  #home #results:last-child {
-    margin-right: 0; }
+  background-color: white;
+  padding: 30px 0; }
   #home #results .https, #home #results .dap {
     font-family: "Source Code Pro", monospace !important;
     margin-bottom: 40px;
-    text-align: center;
-    display: -webkit-box;
-    display: -moz-box;
-    display: box;
-    display: -webkit-flex;
-    display: -moz-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: vertical;
-    -moz-box-orient: vertical;
-    box-orient: vertical;
-    -webkit-flex-direction: column;
-    -moz-flex-direction: column;
-    flex-direction: column;
-    -ms-flex-direction: column;
-    -webkit-box-align: center;
-    -moz-box-align: center;
-    box-align: center;
-    -webkit-align-items: center;
-    -moz-align-items: center;
-    -ms-align-items: center;
-    -o-align-items: center;
-    align-items: center;
-    -ms-flex-align: center;
-    -webkit-box-pack: center;
-    -moz-box-pack: center;
-    box-pack: center;
-    -webkit-justify-content: center;
-    -moz-justify-content: center;
-    -ms-justify-content: center;
-    -o-justify-content: center;
-    justify-content: center;
-    -ms-flex-pack: center; }
+    text-align: center; }
     @media (max-width: 970px) {
       #home #results .https, #home #results .dap {
         width: 100%; } }

@@ -5,10 +5,10 @@
 {% block description %}{{ site.description }}{% endblock %}
 
 {% block content %}
-<div class="wrapper">
   <div class="hero">
-  	<h2>{{ site.name }}</h2>
-  	<h3>{{ site.description }}</h3>
+    <div class="hero-desc">
+      <h3>{{ site.description }}</h3>
+    </div>
   </div>
 
   <div id="results">
@@ -20,5 +20,4 @@
       <a href="/https/domains/" class="button">Bekijk HTTPS Resultaten</a>
     </div>
   </div>
-</div>
 {% endblock %}

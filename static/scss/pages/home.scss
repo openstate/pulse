@@ -3,31 +3,26 @@
 
 #home {
   .hero {
+    background-color: $light-gray;
     color: black;
-    padding-top: 40px;
+    padding: 70px 15px 20px 15px;
     text-align: center;
 
-    @include span-columns(8);
-    @include shift(2);
-
     h2 {
-      font-size: $base-font-size * 7;
-      font-weight: 300;
+      font-size: $base-font-size * 3;
+      font-weight: 900;
     }
 
     h3 {
       font-family: $font-family-monospace !important;
       font-size: $base-font-size * 2;
       font-weight: 100;
-      padding-top: 15px;
     }
   }
 
   #results {
+    background-color: white;
     padding: 30px 0;
-
-    @include span-columns(8);
-    @include shift(2);
 
     .https, .dap {
       font-family: $font-family-monospace !important;
@@ -37,11 +32,6 @@
       @media (max-width: 970px) {
         width: 100%
       }
-
-      @include display(flex);
-      @include flex-direction(column);
-      @include align-items(center);
-      @include justify-content(center);
 
       .total-value {
         font-size: 5em;
