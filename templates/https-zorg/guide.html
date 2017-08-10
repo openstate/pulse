@@ -1,0 +1,127 @@
+{% extends "layout.html" %}
+
+{% block page_id %}https{% endblock %}
+{% block title %}Veilig HTTP (HTTPS) - Pulse{% endblock %}
+{% block description %}De stand van zaken rondom HTTPS in de zorg{% endblock %}
+
+{% block content %}
+
+{% include 'includes/https-zorg/header.html' %}
+
+<section id="main-content" class="white-bkg">
+
+  <nav class="tab-menu" role="tablist">
+    <a href="/https-zorg/domains/" class="tab" role="tab" aria-controls="tab-panel" aria-selected="false">Per Domein</a>
+    <a href="/https-zorg/agencies/" class="tab" role="tab" aria-controls="tab-panel" aria-selected="false">Per Zorginstelling</a>
+    <span class="tab" role="tab" aria-controls="tab-panel" aria-selected="true">Info</span>
+  </nav>
+
+  <div id="tab-panel" class="wrapper" role="tabpanel" aria-hidden="false">
+
+    <div class="guide">
+
+      <h3>Deze website is gemaakt door de <a href="https://openstate.eu" target="_blank">Open State Foundation</a> om burgers en overheden inzicht te geven in de stand van zaken rondom HTTPS bij overheidsdomeinen.</h3>
+
+      Het gebruik van een door HTTPS beveiligde websiteverbinding is om verschillende redenen erg belangrijk:
+      <ul class="ul-normal">
+        <li>Alle gegevens die via een onbeveiligde verbinding (HTTP) worden verstuurd zijn te onderscheppen door anderen. Vaak vraag je persoonlijke informatie op bij overheden en die moeten dus goed beschermd worden.</li>
+        <li>Ook verstuur je gevoelige gegevens naar overheidswebsites, door bijvoorbeeld een formulier in te vullen, documenten te verzenden of bepaalde zoektermen te gebruiken. Hierbij geldt ook dat een HTTP verbinding dit niet beveiligt.</li>
+        <li>Gegevens die via een HTTP verbinding worden verstuurd kunnen onderweg veranderd worden door anderen. Enkel bij een HTTPS verbinding weet je zeker dat de ontvangen of verstuurde gegevens niet aangepast zijn.</li>
+        <li>Websites die HTTPS gebruiken kunnen gebruik maken van het moderne HTTP/2 protocol dat zorgt voor een snellere verbinding.</li>
+      </ul>
+
+
+      De resultaten van Pulse komen geautomatiseerd tot stand en het kan zijn dat er fouten tussen zitten. We proberen maandelijks alle domeinen opnieuw te analyseren zodat de resultaten up to date blijven. We bieden geen individuele hulp bij het oplossen van HTTPS problemen. Desalniettemin staan hieronder handige tips en informatie om een betere score op Pulse te bewerkstelligen voor je domein.</h3>
+      <br>
+      <br>
+
+      <article>
+
+        <h4>Welke domeinen worden er geanalyseerd?</h4>
+
+        <p>
+          Pulse analyseert de ondersteuning, het afdwingen en de kwaliteit van HTTPS van publiek toegankelijke Nederlandse overheidsdomeinen. In Pulse zitten Nederlandse <a href="https://www.communicatierijk.nl/vakkennis/r/rijkswebsites-verplichte-richtlijnen/inhoud/websiteregister" target="_blank">overheidsdomeinen van de Rijksoverheid</a> afkomstig van het Websiteregister van de Rijksoverheid, de <a href="https://www.waarstaatjegemeente.nl/jive?sel_guid=56f41a2d-072b-43ac-9d21-d74e16e2d7b9" target="_blank">domeinen van alle gemeenten</a> via VNG ORCA en <a href="https://data.overheid.nl/data/dataset/gemeenschappelijke-regelingen" target="_blank">domeinen van gemeenschappelijke regelingen</a> met als bron het Ministerie van Binnenlandse Zaken. Daar hebben we zelf nog de domeinen van provincies en waterschappen aan toegevoegd. De domeinen uit deze bronnen zijn samengevoegd in deze <a href="https://github.com/openstate/datasets/blob/master/government_domain_names/domains.csv" target="_blank">lijst van overheidsdomeinen</a>. Er wordt niet automatisch gezocht naar subdomeinen en aangezien HTTPS per subdomein anders geïmplementeerd kan worden kunnen de resultaten van een geanalyseerd domein niet doorgetrokken worden naar (andere) subdomeinen. Domeinen die enkel redirecten naar andere websites worden ook geanalyseerd, maar het domein waar naar geredirect wordt analyseren we niet.
+        </p>
+
+        <p>
+          Op dit moment analyseren we meer dan 1.800 domeinen.
+        </p>
+
+      </article>
+
+      <article>
+
+        <h4>HTTPS implementeren</h4>
+
+        <p>
+          Het proces om sterke HTTPS te ondersteunen en af te dwingen voor een web service kan afhankelijk van de technologie, grootte en ouderdom van de service enorm verschillen.
+        </p>
+
+    Deze data laat zien of overheidsdomeinen ondersteuning bieden voor het HTTPS protocol (<code>https://</code>) en hoe sterk de implementatie daarvan is. HTTPS zorgt voor een veilige internetverbinding tussen websites en haar bezoekers. Voor overheidswebsites wordt <a href="https://www.forumstandaardisatie.nl/standaard/https" target="_blank">HTTPS aanbevolen</a> en het onderliggende protocol <a href="https://www.forumstandaardisatie.nl/standaard/tls" target="_blank">TLS is verplicht</a>.
+        <p>
+          Overheden die werken aan het implementeren van HTTPS kunnen voor meer informatie terecht op onder andere de pagina's van Forum Standaardisatie over <a href="https://www.forumstandaardisatie.nl/standaard/https" target="_blank">HTTPS</a> en <a href="https://www.forumstandaardisatie.nl/standaard/tls" target="_blank">TLS</a>. Ook het NCSC (Nationaal Cyber Security Centrum) biedt informatie over <a href="https://www.ncsc.nl/actueel/factsheets/factsheet-https-kan-een-stuk-veiliger.html" target="_blank">HTTPS</a> en <a href="https://www.ncsc.nl/actueel/whitepapers/ict-beveiligingsrichtlijnen-voor-transport-layer-security-tls.html" target="_blank">TLS</a>.
+        </p>
+
+      </article>
+
+      <article>
+
+        <h4>HTTPS analyse</h4>
+
+        <p>
+          Pulse analyseert het gedrag van vier "endpoints" van elk domein: <code>http://</code>, <code>http://www</code>, <code>https://</code>, en <code>https://www</code>. Data van deze endpoints wordt gebruikt om het totale gedrag van het domein te bepalen.
+        </p>
+
+        <p>
+          Voor deze analyse wordt gebruikt gemaakt van <a href="https://github.com/dhs-ncats/pshtt" target="_blank">open source</a> <a href="https://github.com/18F/domain-scan" target="_blank">tools</a> en de <a href="https://www.ssllabs.com" target="_blank">SSL Labs</a> <a href="https://github.com/ssllabs/ssllabs-scan/blob/stable/ssllabs-api-docs.md" target="_blank">API</a>.
+        </p>
+
+      </article>
+
+      <article>
+
+        <h4>Velden</h4>
+
+        <ul>
+          <li><strong>Ondersteunt HTTPS</strong></li>
+          <li><strong>Waarden:</strong> Nee, Ja</li>
+          <li>Of een domein met HTTPS gebruikt kan worden op ofwel de directe domeinnaam of het <code>www</code> subdomein. Domeinen die van HTTPS terug redirecten naar HTTP worden als een "Nee" beschouwd.</li>
+        </ul>
+
+        <ul>
+          <li><strong>Dwingt HTTPS Af</strong></li>
+          <li><strong>Waarden:</strong> Nee, Ja</li>
+          <li>Of een domein standaard HTTPS gebruikt. Dit kan bewerkstelligd worden door ofwel HTTP endpoints te redirecten naar HTTPS of door enkel bereikbaar te zijn via HTTPS.</li>
+        </ul>
+
+        <ul>
+          <li><strong>Strict Transport Security (HSTS)</strong></li>
+          <li><strong>Waarden:</strong> Nee, Ja</li>
+          <li>Of een domein <a href="https://nl.wikipedia.org/wiki/HTTP_Strict_Transport_Security" target="_blank">HTTP Strict Transport Security</a> heeft geïmplementeerd, wat ervoor zorgt dat <a href="http://caniuse.com/#feat=stricttransportsecurity" target="_blank">browsers die het ondersteunen</a> enkel met dat domein communiceert via HTTPS (zelfs als de gebruiker op een HTTP link klikt).</li>
+          <li>"Ja" betekent dat een geldige <code>Strict-Transport-Security</code> header met een <code>max-age</code> waarde (in seconden) van ten minste <strong>1 jaar</strong> (31536000) aanwezig is op de standaard endpoint van het domein.</li>
+        </ul>
+
+        <ul>
+          <li><strong>Preloaded (aanbevolen)</strong></li>
+          <li><strong>Waarden:</strong> Gereed, Ja</li>
+          <li>"Gereed" betekent dat het domein een sterke HSTS header heeft geïmplementeerd op haar <strong>hoofddomein</strong> waarvan het beleid alle subdomeinen omvat en toestemming heeft gegeven aan <a href="https://hstspreload.appspot.com">preloading door alle grote browsers</a> als HTTPS-only.</li>
+          <li>"Ja" betekent dat het domein daadwerkelijk publiekelijke genoemd wordt in de <a href="https://chromium.googlesource.com/chromium/src/+/master/net/http/transport_security_state_static.json" target="_blank">Chrome preload lijst</a> en de <code>include_subdomains</code> optie in die lijst heeft ingeschakeld. Het bereiken van deze stap betekent in feite dat de namespace van een domein permanent en volledig gebruikt maakt van HTTPS.</li>
+        </ul>
+
+        <ul>
+          <li><strong>SSL Labs Klasse</strong></li>
+          <li><strong>Waarden:</strong> T, F, C, B, A-, A, A+</li>
+          <li>Een klassering die de <em>kwaliteit</em> van een HTTPS configuratie meet, zoals berekend door <a href="https://www.ssllabs.com" target="_blank">SSL Labs</a>. Dit is een gratis en algemeen gebruikte benchmarkdienst.</li>
+          <li>De klasseringen worden berekend middels een <a href="https://www.ssllabs.com/downloads/SSL_Server_Rating_Guide.pdf" target="_blank">gedetailleerde methodologie</a> die kijkt naar de sterkte van de cryptografische sleutels, keuze van ciphers, ondersteunde protocollen, en andere relevante standaarden (zoals HSTS).</li>
+          <li>De klasseringen zijn klikbaar en linken voor elk domein naar een gedetailleerd rapport op SSL Labs. Als voorbeeld, bekijk het <a href="https://www.ssllabs.com/ssltest/analyze.html?d=pulse.openstate.eu" target="_blank">SSL Labs rapport voor Pulse zelf</a>.</li>
+        </ul>
+
+      </article>
+
+    </div>
+
+  </div>
+
+</section>
+
+{% endblock %}

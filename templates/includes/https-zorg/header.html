@@ -1,0 +1,22 @@
+<div class="big-header">
+  <header class="chart">
+
+    <div class="donut">
+      <div class="zorg_https_chart"></div>
+      {% include 'includes/https-zorg/donut.html' %}
+    </div>
+
+    <div class="description">
+      <h2>Veilig HTTP (HTTPS) in de zorg</h2>
+      <h3>Laatst bijgewerkt <strong>{{ scan_date | date("%d-%m-%Y") }}</strong></h3>
+      <p>
+      Deze data laat zien of websites van zorginstellingen ondersteuning bieden voor het HTTPS protocol (<code>https://</code>) en hoe sterk de implementatie daarvan is. HTTPS zorgt voor een veilige en niet manipuleerbare internetverbinding tussen websites en haar bezoekers.
+      </p>
+
+      <p>
+        HTTPS en TLS data zijn voor het laatst verzameld door middel van een scan van het publieke internet op <strong>{{ scan_date | date("%d-%m-%Y") }}</strong>.
+      </p>
+    </div>
+
+  </header>
+</div>
