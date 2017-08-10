@@ -261,10 +261,10 @@ def process_domains(domains, agencies, scan_data):
   # use the scan data to draw conclusions.
   for domain_name in domains.keys():
 
-    if eligible_for_analytics(domains[domain_name]):
-      reports['analytics'][domain_name] = analytics_report_for(
-        domain_name, domains[domain_name], scan_data
-      )
+    #if eligible_for_analytics(domains[domain_name]):
+    #  reports['analytics'][domain_name] = analytics_report_for(
+    #    domain_name, domains[domain_name], scan_data
+    #  )
 
     if eligible_for_https(domains[domain_name]):
       reports['https'][domain_name] = https_report_for(
