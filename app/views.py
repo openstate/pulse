@@ -1,6 +1,6 @@
 
 from flask import render_template, Response
-from app import models
+from app import models, models_zorg
 from app.data import FIELD_MAPPING
 import ujson
 
@@ -23,6 +23,11 @@ def register(app):
         response = Response(ujson.dumps(models.Report.latest().get(report_name, {})))
         response.headers['Content-Type'] = 'application/json'
         return response
+    @app.route("/data-zorg/reports/<report_name>.json")
+    def report_zorg(report_name):
+        response = Response(ujson.dumps(models_zorg.Report.latest().get(report_name, {})))
+        response.headers['Content-Type'] = 'application/json'
+        return response
 
     # Detailed data per-domain, used to power the data tables.
     @app.route("/data/domains/<report_name>.<ext>")
@@ -37,6 +42,18 @@ def register(app):
           response = Response(models.Domain.to_csv(domains, report_name))
           response.headers['Content-Type'] = 'text/csv'
         return response
+    @app.route("/data-zorg/domains/<report_name>.<ext>")
+    def domain_report_zorg(report_name, ext):
+        domains = models_zorg.Domain.eligible(report_name)
+        domains = sorted(domains, key=lambda k: k['domain'])
+
+        if ext == "json":
+          response = Response(ujson.dumps({'data': domains}))
+          response.headers['Content-Type'] = 'application/json'
+        elif ext == "csv":
+          response = Response(models_zorg.Domain.to_csv(domains, report_name))
+          response.headers['Content-Type'] = 'text/csv'
+        return response
 
     @app.route("/data/agencies/<report_name>.json")
     def agency_report(report_name):
@@ -44,18 +61,33 @@ def register(app):
         response = Response(ujson.dumps({'data': domains}))
         response.headers['Content-Type'] = 'application/json'
         return response
+    @app.route("/data-zorg/agencies/<report_name>.json")
+    def agency_report_zorg(report_name):
+        domains = models_zorg.Agency.eligible(report_name)
+        response = Response(ujson.dumps({'data': domains}))
+        response.headers['Content-Type'] = 'application/json'
+        return response
 
     @app.route("/https/domains/")
     def https_domains():
         return render_template("https/domains.html")
+    @app.route("/https-zorg/domains/")
+    def https_domains_zorg():
+        return render_template("https-zorg/domains.html")
 
     @app.route("/https/agencies/")
     def https_agencies():
         return render_template("https/agencies.html")
+    @app.route("/https-zorg/agencies/")
+    def https_agencies_zorg():
+        return render_template("https-zorg/agencies.html")
 
     @app.route("/https/guidance/")
     def https_guide():
         return render_template("https/guide.html")
+    @app.route("/https-zorg/guidance/")
+    def https_guide_zorg():
+        return render_template("https-zorg/guide.html")
 
     #@app.route("/analytics/domains/")
     #def analytics_domains():
@@ -76,10 +108,24 @@ def register(app):
             pass # TODO: 404
 
         return render_template("agency.html", agency=agency)
+    @app.route("/agency-zorg/<slug>")
+    def agency_zorg(slug=None):
+        agency = models_zorg.Agency.find(slug)
+        if agency is None:
+            pass # TODO: 404
+
+        return render_template("agency.html", agency=agency)
 
     @app.route("/domain/<hostname>")
     def domain(hostname=None):
         domain = models.Domain.find(hostname)
+        if domain is None:
+            pass # TODO: 404
+
+        return render_template("domain.html", domain=domain)
+    @app.route("/domain-zorg/<hostname>")
+    def domain_zorg(hostname=None):
+        domain = models_zorg.Domain.find(hostname)
         if domain is None:
             pass # TODO: 404
 
