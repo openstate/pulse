@@ -32,7 +32,7 @@ var Utils = {
         return data;
       else
         return "" +
-          "<a href=\"/" + page + "/domains/#" +
+          "<a href=\"/" + page + "-zorg/domains/#" +
             QueryString.stringify({q: row["name"]}) + "\">" +
             data +
           "</a>";
