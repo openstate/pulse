@@ -32,6 +32,20 @@ var Utils = {
         return data;
       else
         return "" +
+          "<a href=\"/" + page + "/domains/#" +
+            QueryString.stringify({q: row["name"]}) + "\">" +
+            data +
+          "</a>";
+    };
+  },
+
+  // used to make "71" say "71 domains" and link to filtered domains
+  filterAgencyZorg: function(page) {
+    return function(data, type, row) {
+      if (type == "sort")
+        return data;
+      else
+        return "" +
           "<a href=\"/" + page + "-zorg/domains/#" +
             QueryString.stringify({q: row["name"]}) + "\">" +
             data +
