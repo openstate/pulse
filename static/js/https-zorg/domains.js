@@ -199,7 +199,6 @@ $(document).ready(function () {
           render: Utils.linkDomain
         },
         {data: "canonical"},
-        {data: "agency_name"},
         {
           data: "https.uses",
           render: display(names.uses)
