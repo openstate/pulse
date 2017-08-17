@@ -474,13 +474,25 @@ a#skipnav {
 #accessibility #content #main-content .tab-menu,
 #about #content #main-content .tab-menu {
   width: 100%; }
-  #https #content #main-content .tab-menu .tab,
-  #domain #content #main-content .tab-menu .tab,
-  #agency #content #main-content .tab-menu .tab,
-  #analytics #content #main-content .tab-menu .tab,
-  #accessibility #content #main-content .tab-menu .tab,
-  #about #content #main-content .tab-menu .tab {
+  #https #content #main-content .tab-menu .tab.zorg,
+  #domain #content #main-content .tab-menu .tab.zorg,
+  #agency #content #main-content .tab-menu .tab.zorg,
+  #analytics #content #main-content .tab-menu .tab.zorg,
+  #accessibility #content #main-content .tab-menu .tab.zorg,
+  #about #content #main-content .tab-menu .tab.zorg {
     width: 50%;
+    margin: 0;
+    float: left;
+    text-align: center;
+    padding: 30px 0;
+    font-size: 1.5em; }
+  #https #content #main-content .tab-menu .tab.overheid,
+  #domain #content #main-content .tab-menu .tab.overheid,
+  #agency #content #main-content .tab-menu .tab.overheid,
+  #analytics #content #main-content .tab-menu .tab.overheid,
+  #accessibility #content #main-content .tab-menu .tab.overheid,
+  #about #content #main-content .tab-menu .tab.overheid {
+    width: 33.33%;
     margin: 0;
     float: left;
     text-align: center;
