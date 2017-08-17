@@ -249,6 +249,9 @@ nav li a {
 header {
   background-color: white; }
 
+#loading {
+  text-align: center; }
+
 footer {
   border-top: 1px solid #F2F2F2;
   color: black;

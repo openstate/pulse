@@ -56,6 +56,7 @@ var Utils = {
   searchLinks: function() {
     var api = this.api();
     var query = QueryString.parse(location.hash).q;
+    $('#loading').hide();
 
     if (query) {
       $("input[type=search]").val(query);
