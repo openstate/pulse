@@ -27,7 +27,7 @@ $(document).ready(function () {
         {data: "name"},
         {
           data: "https.eligible",
-          render: Utils.filterAgency("https")
+          render: Utils.filterAgencyZorg("https")
         },
         {data: "https.uses"},
         {data: "https.enforces"},
