@@ -8,6 +8,7 @@
     padding: 70px 15px 20px 15px;
     text-align: center;
 
+
     h2 {
       font-size: $base-font-size * 3;
       font-weight: 900;
@@ -24,13 +25,25 @@
     background-color: white;
     padding: 30px 0;
 
+    @include span-columns(12);
+
+    .home_spacer {
+      @include span-columns(2 of 12);
+    }
+
     .https, .dap {
       font-family: $font-family-monospace !important;
       margin-bottom: 40px;
       text-align: center;
 
+      @include span-columns(4 of 12);
+
       @media (max-width: 970px) {
         width: 100%
+      }
+
+      .total-type {
+        font-size: 2em;
       }
 
       .total-value {

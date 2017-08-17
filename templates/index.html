@@ -12,12 +12,23 @@
   </div>
 
   <div id="results">
+    <div class="home_spacer">
+        &nbsp;
+    </div>
     <div class="https">
     	<div class="https_chart"
         data-width="287"
       ></div>
     	{% include 'includes/https/donut.html' %}
-      <a href="/https/domains/" class="button">Bekijk HTTPS Resultaten</a>
+        <a href="/https/domains/" class="button">Bekijk {{ overheid_aantal }} Domeinen</a>
+    </div>
+    <div class="https">
+      <div class="zorg_https_chart"
+        data-width="287"
+      ></div>
+        {% include 'includes/https-zorg/donut.html' %}
+        <a href="/https-zorg/domains/" class="button">Bekijk {{ zorg_aantal }} Domeinen</a>
     </div>
   </div>
+
 {% endblock %}

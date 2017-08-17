@@ -41,6 +41,12 @@ body {
   background-color: $light-gray;
 }
 
+#home {
+  #content {
+    @include outer-container(100%);
+  }
+}
+
 a {
   color: black;
   font-weight: 900;
@@ -241,7 +247,7 @@ a#skipnav {
         width: 100%;
 
         .tab {
-          width: 33.33%;
+          width: 50%;
           margin: 0;
           float: left;
           text-align: center;
@@ -288,6 +294,7 @@ a#skipnav {
 }
 
 .https_chart,
+.zorg_https_chart,
 .dap_chart {
   padding-top: 15px;
 }

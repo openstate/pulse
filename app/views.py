@@ -61,12 +61,12 @@ def register(app):
         response = Response(ujson.dumps({'data': domains}))
         response.headers['Content-Type'] = 'application/json'
         return response
-    @app.route("/data-zorg/agencies/<report_name>.json")
-    def agency_report_zorg(report_name):
-        domains = models_zorg.Agency.eligible(report_name)
-        response = Response(ujson.dumps({'data': domains}))
-        response.headers['Content-Type'] = 'application/json'
-        return response
+    #@app.route("/data-zorg/agencies/<report_name>.json")
+    #def agency_report_zorg(report_name):
+    #    domains = models_zorg.Agency.eligible(report_name)
+    #    response = Response(ujson.dumps({'data': domains}))
+    #    response.headers['Content-Type'] = 'application/json'
+    #    return response
 
     @app.route("/https/domains/")
     def https_domains():
@@ -78,9 +78,9 @@ def register(app):
     @app.route("/https/agencies/")
     def https_agencies():
         return render_template("https/agencies.html")
-    @app.route("/https-zorg/agencies/")
-    def https_agencies_zorg():
-        return render_template("https-zorg/agencies.html")
+    #@app.route("/https-zorg/agencies/")
+    #def https_agencies_zorg():
+    #    return render_template("https-zorg/agencies.html")
 
     @app.route("/https/guidance/")
     def https_guide():
@@ -108,13 +108,13 @@ def register(app):
             pass # TODO: 404
 
         return render_template("agency.html", agency=agency)
-    @app.route("/agency-zorg/<slug>")
-    def agency_zorg(slug=None):
-        agency = models_zorg.Agency.find(slug)
-        if agency is None:
-            pass # TODO: 404
+    #@app.route("/agency-zorg/<slug>")
+    #def agency_zorg(slug=None):
+    #    agency = models_zorg.Agency.find(slug)
+    #    if agency is None:
+    #        pass # TODO: 404
 
-        return render_template("agency.html", agency=agency)
+    #    return render_template("agency.html", agency=agency)
 
     @app.route("/domain/<hostname>")
     def domain(hostname=None):

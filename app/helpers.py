@@ -1,6 +1,6 @@
 import yaml
 import datetime
-from app import models
+from app import models, models_zorg
 from app.data import FIELD_MAPPING
 
 # For use in templates.
@@ -12,11 +12,20 @@ def register(app):
   def scan_date():
     return models.Report.report_time(models.Report.latest()['report_date'])
 
+  def scan_date_zorg():
+    return models_zorg.Report.report_time(models_zorg.Report.latest()['report_date'])
+
+  def overheid_aantal():
+    return models.Report.latest()['https']['eligible']
+
+  def zorg_aantal():
+    return models_zorg.Report.latest()['https']['eligible']
+
   # Make site metadata available everywhere.
   meta = yaml.safe_load(open("meta.yml"))
   @app.context_processor
   def inject_meta():
-      return dict(site=meta, now=datetime.datetime.utcnow, scan_date=scan_date())
+      return dict(site=meta, now=datetime.datetime.utcnow, scan_date=scan_date(), scan_date_zorg=scan_date_zorg(), overheid_aantal=overheid_aantal(), zorg_aantal=zorg_aantal())
 
   @app.template_filter('date')
   def datetimeformat(value, format='%H:%M / %d-%m-%Y'):

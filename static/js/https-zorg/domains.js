@@ -41,17 +41,6 @@ $(document).ready(function () {
       1: "Gereed",  // Preload-ready
       2: "Ja"  // Yes
     },
-
-    grade: {
-      "-1": "",
-      0: "F",
-      1: "T",
-      2: "C",
-      3: "B",
-      4: "A-",
-      5: "A",
-      6: "A+"
-    }
   };
 
   var display = function(set) {
@@ -61,23 +50,6 @@ $(document).ready(function () {
       else
         return set[data.toString()];
     }
-  };
-
-  var linkGrade = function(data, type, row) {
-    var grade = display(names.grade)(data, type);
-    if (type == "sort")
-      return grade;
-    else if (grade == "")
-      return ""
-    else
-      return "" +
-        "<a href=\"" + labsUrlFor(row.canonical) + "\" target=\"blank\">" +
-          grade +
-        "</a>";
-  };
-
-  var labsUrlFor = function(domain) {
-    return "https://www.ssllabs.com/ssltest/analyze.html?d=" + domain;
   };
 
 
@@ -92,35 +64,12 @@ $(document).ready(function () {
     var hsts = row.https.hsts;
     var hsts_age = row.https.hsts_age;
     var preloaded = row.https.preloaded;
-    var grade = row.https.grade;
 
     var tls = [];
 
-    // If an SSL Labs grade exists at all...
-    if (row.https.grade >= 0) {
-
-      if (row.https.sig == "SHA1withRSA")
-        tls.push("Certificaat gebruikt een " + l("sha1", "zwakke SHA-1 signature"));
-
-      if (row.https.ssl3 == true)
-        tls.push("Ondersteunt het " + l("ssl3", "onveilige SSLv3 protocol"));
-
-      if (row.https.tls12 == false)
-        tls.push("Geen ondersteuning voor de " + l("tls12", "meest recente versie van TLS"));
-    }
-
     // Though not found through SSL Labs, this is a TLS issue.
     if (https == 1)
-      tls.push("Certificate chain niet geldig voor alle publieke clients. Bekijk " + l(labsUrlFor(row.canonical), "SSL Labs") + " voor details.");
-
-    // Non-urgent TLS details.
-    var tlsDetails = "";
-    if (grade >= 0) {
-      if (tls.length > 0)
-        tlsDetails += tls.join(". ") + ".";
-      else if (grade < 6)
-        tlsDetails += l(labsUrlFor(row.canonical), "Bekijk SSL Labs rapport") + " om TLS kwaliteitsproblemen op te lossen.";
-    }
+      tls.push("Certificate chain niet geldig voor alle publieke clients.");
 
     // Principles of message crafting:
     //
@@ -133,23 +82,19 @@ $(document).ready(function () {
     //   are subject to OMB requirements.
 
     var details;
-    // By default, if it's an F grade, *always* give TLS details.
-    var urgent = (grade == 0);
 
     // CASE: Perfect score!
     if (
         (https >= 1) && (behavior >= 2) &&
         (hsts == 2) && (preloaded == 2) &&
-        (tls.length == 0) && (grade == 6))
+        (tls.length == 0))
       details = g("Perfecte score! HTTPS wordt strikt afgedwongen in de hele zone.");
 
     // CASE: Only issue is TLS quality issues.
     else if (
         (https >= 1) && (behavior >= 2) &&
         (hsts == 2) && (preloaded == 2)) {
-      details = g("Bijna perfect!") + " " + tlsDetails;
-      // Override F grade override.
-      urgent = false;
+      details = g("Bijna perfect!") + " " + tls;
     }
 
     // CASE: HSTS preloaded, but HSTS header is missing.
@@ -184,7 +129,7 @@ $(document).ready(function () {
 
     // CASE: HTTPS w/invalid chain supported and enforced, no HSTS.
     else if ((https == 1) && (behavior >= 2) && (hsts < 2))
-      details = n("Bijna: ") + l("hsts", "HSTS") + " ontbreekt op het domein, maar de certificate chain kan niet geldig zijn voor alle publieke clients. HSTS verhindert dat gebruikers certificaatwaarschuwingen wegklikken. Bekijk " + l(labsUrlFor(row.canonical), "het SSL Labs rapport") + " voor details.";
+      details = n("Bijna: ") + l("hsts", "HSTS") + " ontbreekt op het domein, maar de certificate chain kan niet geldig zijn voor alle publieke clients. HSTS verhindert dat gebruikers certificaatwaarschuwingen wegklikken.";
 
     // CASE: HTTPS supported, not enforced, no HSTS.
     else if ((https >= 1) && (behavior < 2) && (hsts < 2))
@@ -203,12 +148,7 @@ $(document).ready(function () {
     else
       details = "";
 
-    // If there's an F grade, and TLS details weren't already included,
-    // add an urgent warning.
-    if (urgent)
-      return details + " " + w("Waarschuwing: ") + l(labsUrlFor(row.canonical), "bekijk SSL Labs rapport") + " om TLS kwaliteitsproblemen op te lossen."
-    else
-      return details;
+    return details;
   };
 
   var links = {
@@ -275,10 +215,6 @@ $(document).ready(function () {
         {
           data: "https.preloaded",
           render: display(names.preloaded)
-        },
-        {
-          data: "https.grade",
-          render: linkGrade
         },
         {
           data: "",

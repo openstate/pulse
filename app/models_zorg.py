@@ -5,6 +5,13 @@ import datetime
 import csv
 from app.data import CSV_FIELDS, FIELD_MAPPING, LABELS
 
+del LABELS['branch']
+del LABELS['agency_name']
+CSV_FIELDS['common'].remove('branch')
+CSV_FIELDS['common'].remove('agency_name')
+CSV_FIELDS['https'].remove('grade')
+del CSV_FIELDS['analytics']
+
 this_dir = os.path.dirname(__file__)
 db = TinyDB(os.path.join(this_dir, '../data/db-zorg.json'))
 

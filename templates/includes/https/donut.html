@@ -76,6 +76,15 @@
 
         g.append("text")
             .attr("text-anchor", "middle")
+            .attr("class", "total-type")
+            .attr("dy", "-1.8em")
+            .attr("fill", "black")
+            .text(function(d){
+                return "Overheid";
+        });
+
+        g.append("text")
+            .attr("text-anchor", "middle")
             .attr("class", "total-value")
             .attr("dy", "0.2em")
             .attr("fill", "black")

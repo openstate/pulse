@@ -1,8 +1,17 @@
 @import "https://fonts.googleapis.com/css?family=Montserrat|Source+Code+Pro";
-* {
+/* Neat 1.7.0
+ * http://neat.bourbon.io
+ * Copyright 2012-2014 thoughtbot, inc.
+ * MIT License */
+html {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box; }
+
+*, *:before, *:after {
+  -webkit-box-sizing: inherit;
+  -moz-box-sizing: inherit;
+  box-sizing: inherit; }
 
 input[type="button"], input[type="reset"], input[type="submit"],
 button {
@@ -200,6 +209,15 @@ p {
 
 body {
   background-color: #F2F2F2; }
+
+#home #content {
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto; }
+  #home #content:after {
+    content: "";
+    display: table;
+    clear: both; }
 
 a {
   color: black;
@@ -462,7 +480,7 @@ a#skipnav {
   #analytics #content #main-content .tab-menu .tab,
   #accessibility #content #main-content .tab-menu .tab,
   #about #content #main-content .tab-menu .tab {
-    width: 33.33%;
+    width: 50%;
     margin: 0;
     float: left;
     text-align: center;
@@ -527,6 +545,7 @@ a#skipnav {
       text-decoration: underline; }
 
 .https_chart,
+.zorg_https_chart,
 .dap_chart {
   padding-top: 15px; }
 
@@ -696,14 +715,35 @@ svg {
     font-weight: 100; }
 #home #results {
   background-color: white;
-  padding: 30px 0; }
+  padding: 30px 0;
+  float: left;
+  display: block;
+  margin-right: 2.35765%;
+  width: 100%; }
+  #home #results:last-child {
+    margin-right: 0; }
+  #home #results .home_spacer {
+    float: left;
+    display: block;
+    margin-right: 2.35765%;
+    width: 14.70196%; }
+    #home #results .home_spacer:last-child {
+      margin-right: 0; }
   #home #results .https, #home #results .dap {
     font-family: "Source Code Pro", monospace !important;
     margin-bottom: 40px;
-    text-align: center; }
+    text-align: center;
+    float: left;
+    display: block;
+    margin-right: 2.35765%;
+    width: 31.76157%; }
+    #home #results .https:last-child, #home #results .dap:last-child {
+      margin-right: 0; }
     @media (max-width: 970px) {
       #home #results .https, #home #results .dap {
         width: 100%; } }
+    #home #results .https .total-type, #home #results .dap .total-type {
+      font-size: 2em; }
     #home #results .https .total-value, #home #results .dap .total-value {
       font-size: 5em; }
 

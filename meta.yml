@@ -4,11 +4,11 @@
 url: https://pulse.openstate.eu
 
 name: Pulse
-description: "De stand van zaken rondom HTTPS bij overheidsdomeinen."
+description: "De stand van zaken rondom HTTPS in de publieke sector."
 
 # Data source URLs. They shouldn't require manual updates.
 data:
-  # URL where we download the .gov domain list from.
+  # URL where we download the domain list from.
   domains_url: https://raw.githubusercontent.com/openstate/datasets/master/government_domain_names/domains.csv
 
   # URL where we download the participating DAP .gov list from.
