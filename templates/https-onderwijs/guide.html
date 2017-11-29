@@ -2,33 +2,32 @@
 
 {% block page_id %}https{% endblock %}
 {% block title %}Veilig HTTP (HTTPS) - Pulse{% endblock %}
-{% block description %}De stand van zaken rondom HTTPS in de zorg{% endblock %}
+{% block description %}De stand van zaken rondom HTTPS in het onderwijs{% endblock %}
 
 {% block content %}
 
-{% include 'includes/https-zorg/header.html' %}
+{% include 'includes/https-onderwijs/header.html' %}
 
 <section id="main-content" class="white-bkg">
 
   <nav class="tab-menu" role="tablist">
-    <a href="/https-zorg/domains/" class="tab zorg" role="tab" aria-controls="tab-panel" aria-selected="false">Per Domein</a>
-    <span class="tab zorg" role="tab" aria-controls="tab-panel" aria-selected="true">Info</span>
+    <a href="/https-onderwijs/domains/" class="tab onderwijs" role="tab" aria-controls="tab-panel" aria-selected="false">Per Domein</a>
+    <a href="/https-onderwijs/agencies/" class="tab onderwijs" role="tab" aria-controls="tab-panel" aria-selected="false">Per Onderwijstype</a>
+    <span class="tab onderwijs" role="tab" aria-controls="tab-panel" aria-selected="true">Info</span>
   </nav>
 
   <div id="tab-panel" class="wrapper" role="tabpanel" aria-hidden="false">
 
     <div class="guide">
 
-      <h3>Deze website is gemaakt door de <a href="https://openstate.eu" target="_blank">Open State Foundation</a> om burgers en organisaties inzicht te geven in de stand van zaken rondom HTTPS bij zorgdomeinen.</h3>
+      <h3>Deze website is gemaakt door de <a href="https://openstate.eu" target="_blank">Open State Foundation</a> om burgers en organisaties inzicht te geven in de stand van zaken rondom HTTPS bij onderwijsdomeinen.</h3>
 
       Het gebruik van een door HTTPS beveiligde websiteverbinding is om verschillende redenen erg belangrijk:
       <ul class="ul-normal">
-        <li>Alle gegevens die via een onbeveiligde verbinding (HTTP) worden verstuurd zijn te onderscheppen door anderen. Vaak vraag je persoonlijke informatie op bij zorginstellingen en die moeten dus goed beschermd worden.</li>
-        <li>Ook verstuur je gevoelige gegevens naar zorgwebsites, door bijvoorbeeld een formulier in te vullen, documenten te verzenden of bepaalde zoektermen te gebruiken. Hierbij geldt ook dat een HTTP verbinding dit niet beveiligt.</li>
+        <li>Alle gegevens die via een onbeveiligde verbinding (HTTP) worden verstuurd zijn te onderscheppen door anderen. Het onderwijs wordt steeds digitaler en de bijbehorende (persoonlijke) gegevens moeten dus goed beschermd worden.</li>
         <li>Gegevens die via een HTTP verbinding worden verstuurd kunnen onderweg veranderd worden door anderen. Enkel bij een HTTPS verbinding weet je zeker dat de ontvangen of verstuurde gegevens niet aangepast zijn.</li>
         <li>Websites die HTTPS gebruiken kunnen gebruik maken van het moderne HTTP/2 protocol dat zorgt voor een snellere verbinding.</li>
       </ul>
-
 
       De resultaten van Pulse komen geautomatiseerd tot stand en het kan zijn dat er fouten tussen zitten. We bieden geen individuele hulp bij het oplossen van HTTPS problemen. Desalniettemin staan hieronder handige tips en informatie om een betere score op Pulse te bewerkstelligen voor je domein.</h3>
       <br>
@@ -39,7 +38,7 @@
         <h4>Welke domeinen worden er geanalyseerd?</h4>
 
         <p>
-          Pulse analyseert de ondersteuning, het afdwingen en de kwaliteit van HTTPS van publiek toegankelijke Nederlandse zorgdomeinen. Er wordt niet automatisch gezocht naar subdomeinen en aangezien HTTPS per subdomein anders geïmplementeerd kan worden kunnen de resultaten van een geanalyseerd domein niet doorgetrokken worden naar (andere) subdomeinen. Domeinen die enkel redirecten naar andere websites worden ook geanalyseerd, maar het domein waar naar geredirect wordt analyseren we niet.
+        Pulse analyseert de ondersteuning, het afdwingen en de kwaliteit van HTTPS van publiek toegankelijke Nederlandse onderwijsdomeinen. Deze halen wij uit de <a href="https://www.duo.nl/open_onderwijsdata/" target="_blank">open data die door DUO beschikbaar wordt gesteld</a>. Er wordt niet automatisch gezocht naar subdomeinen en aangezien HTTPS per subdomein anders geïmplementeerd kan worden kunnen de resultaten van een geanalyseerd domein niet doorgetrokken worden naar (andere) subdomeinen. Domeinen die enkel redirecten naar andere websites worden ook geanalyseerd, maar het domein waar naar geredirect wordt analyseren we niet.
         </p>
 
       </article>
@@ -52,9 +51,9 @@
           Het proces om sterke HTTPS te ondersteunen en af te dwingen voor een web service kan afhankelijk van de technologie, grootte en ouderdom van de service enorm verschillen.
         </p>
 
-    Deze data laat zien of zorgdomeinen ondersteuning bieden voor het HTTPS protocol (<code>https://</code>) en hoe sterk de implementatie daarvan is. HTTPS zorgt voor een veilige internetverbinding tussen websites en haar bezoekers. Voor websites in de publieke sector wordt <a href="https://www.forumstandaardisatie.nl/standaard/https" target="_blank">HTTPS aanbevolen</a> en het onderliggende protocol <a href="https://www.forumstandaardisatie.nl/standaard/tls" target="_blank">TLS is verplicht</a>.
+    Deze data laat zien of onderwijsdomeinen ondersteuning bieden voor het HTTPS protocol (<code>https://</code>) en hoe sterk de implementatie daarvan is. HTTPS zorgt voor een veilige internetverbinding tussen websites en haar bezoekers. Voor websites in de publieke sector wordt <a href="https://www.forumstandaardisatie.nl/standaard/https" target="_blank">HTTPS aanbevolen</a> en het onderliggende protocol <a href="https://www.forumstandaardisatie.nl/standaard/tls" target="_blank">TLS is verplicht</a>.
         <p>
-          Zorginstellingen die werken aan het implementeren van HTTPS kunnen voor meer informatie terecht op onder andere de pagina's van Forum Standaardisatie over <a href="https://www.forumstandaardisatie.nl/standaard/https" target="_blank">HTTPS</a> en <a href="https://www.forumstandaardisatie.nl/standaard/tls" target="_blank">TLS</a>. Ook het NCSC (Nationaal Cyber Security Centrum) biedt informatie over <a href="https://www.ncsc.nl/actueel/factsheets/factsheet-https-kan-een-stuk-veiliger.html" target="_blank">HTTPS</a> en <a href="https://www.ncsc.nl/actueel/whitepapers/ict-beveiligingsrichtlijnen-voor-transport-layer-security-tls.html" target="_blank">TLS</a>.
+          Onderwijsinstellingen die werken aan het implementeren van HTTPS kunnen voor meer informatie terecht op onder andere de pagina's van Forum Standaardisatie over <a href="https://www.forumstandaardisatie.nl/standaard/https" target="_blank">HTTPS</a> en <a href="https://www.forumstandaardisatie.nl/standaard/tls" target="_blank">TLS</a>. Ook het NCSC (Nationaal Cyber Security Centrum) biedt informatie over <a href="https://www.ncsc.nl/actueel/factsheets/factsheet-https-kan-een-stuk-veiliger.html" target="_blank">HTTPS</a> en <a href="https://www.ncsc.nl/actueel/whitepapers/ict-beveiligingsrichtlijnen-voor-transport-layer-security-tls.html" target="_blank">TLS</a>.
         </p>
 
       </article>

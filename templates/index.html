@@ -29,6 +29,13 @@
         {% include 'includes/https-zorg/donut.html' %}
         <a href="/https-zorg/domains/" class="button">Bekijk {{ zorg_aantal }} Domeinen</a>
     </div>
+    <div class="https">
+      <div class="onderwijs_https_chart"
+        data-width="287"
+      ></div>
+        {% include 'includes/https-onderwijs/donut.html' %}
+        <a href="/https-onderwijs/domains/" class="button">Bekijk {{ onderwijs_aantal }} Domeinen</a>
+    </div>
   </div>
 
 {% endblock %}

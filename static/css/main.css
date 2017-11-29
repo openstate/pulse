@@ -259,7 +259,7 @@ footer {
   text-align: center; }
 
 .footer-text {
-  width: 30%;
+  width: 28%;
   float: left; }
 
 .footer-contact {
@@ -267,7 +267,7 @@ footer {
   margin-left: 8%;
   padding: 20px 0;
   color: gray !important;
-  width: 30%; }
+  width: 28%; }
 
 .footer-contact li {
   margin: 5px; }
@@ -489,12 +489,17 @@ a#skipnav {
     text-align: center;
     padding: 30px 0;
     font-size: 1.5em; }
-  #https #content #main-content .tab-menu .tab.overheid,
+  #https #content #main-content .tab-menu .tab.overheid, #https #content #main-content .tab-menu .tab.onderwijs,
   #domain #content #main-content .tab-menu .tab.overheid,
+  #domain #content #main-content .tab-menu .tab.onderwijs,
   #agency #content #main-content .tab-menu .tab.overheid,
+  #agency #content #main-content .tab-menu .tab.onderwijs,
   #analytics #content #main-content .tab-menu .tab.overheid,
+  #analytics #content #main-content .tab-menu .tab.onderwijs,
   #accessibility #content #main-content .tab-menu .tab.overheid,
-  #about #content #main-content .tab-menu .tab.overheid {
+  #accessibility #content #main-content .tab-menu .tab.onderwijs,
+  #about #content #main-content .tab-menu .tab.overheid,
+  #about #content #main-content .tab-menu .tab.onderwijs {
     width: 33.33%;
     margin: 0;
     float: left;
@@ -561,6 +566,7 @@ a#skipnav {
 
 .https_chart,
 .zorg_https_chart,
+.onderwijs_https_chart,
 .dap_chart {
   padding-top: 15px; }
 
@@ -741,7 +747,7 @@ svg {
     float: left;
     display: block;
     margin-right: 2.35765%;
-    width: 14.70196%; }
+    width: 10.43705%; }
     #home #results .home_spacer:last-child {
       margin-right: 0; }
   #home #results .https, #home #results .dap {
@@ -751,7 +757,7 @@ svg {
     float: left;
     display: block;
     margin-right: 2.35765%;
-    width: 31.76157%; }
+    width: 23.23176%; }
     #home #results .https:last-child, #home #results .dap:last-child {
       margin-right: 0; }
     @media (max-width: 970px) {

@@ -28,7 +28,7 @@
     @include span-columns(12);
 
     .home_spacer {
-      @include span-columns(2 of 12);
+      @include span-columns(1.5 of 12);
     }
 
     .https, .dap {
@@ -36,7 +36,7 @@
       margin-bottom: 40px;
       text-align: center;
 
-      @include span-columns(4 of 12);
+      @include span-columns(3 of 12);
 
       @media (max-width: 970px) {
         width: 100%

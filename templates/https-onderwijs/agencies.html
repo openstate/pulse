@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+
+{% block page_id %}https{% endblock %}
+{% block title %}Veilig HTTP (HTTPS) - Pulse{% endblock %}
+{% block description %}De stand van zaken rondom HTTPS in het onderwijs{% endblock %}
+
+{% block content %}
+
+{% include 'includes/https-onderwijs/header.html' %}
+
+<section id="main-content" class="white-bkg">
+
+  <nav class="tab-menu" role="tablist">
+    <a href="/https-onderwijs/domains/" class="tab onderwijs" role="tab" aria-controls="tab-panel" aria-selected="false">Per Domein</a>
+    <span class="tab onderwijs" role="tab" aria-controls="tab-panel" aria-selected="true">Per Onderwijstype</span>
+    <a href="/https-onderwijs/guidance/" class="tab onderwijs" role="tab" aria-controls="tab-panel" aria-selected="false">Info</a>
+  </nav>
+
+  <div id="tab-panel" class="wrapper" role="tabpanel" aria-hidden="false">
+    <table class="agency responsive https">
+      <caption>Veilig HTTP(S) Per Overheid. Tabel is sorteerbaar door op de kolomnamen bovenaan de klikken. Elke rij bevat een overheid en gerelateerde attributen.</caption>
+      <thead>
+        <tr>
+          <th class="all" scope="col">Onderwijstype</th>
+          <th class="all" scope="col">Aantal Domeinen</th>
+          <th class="min-tablet" scope="col">Ondersteunt HTTPS</th>
+          <th class="min-tablet" scope="col">Dwingt HTTPS Af</th>
+          <th class="desktop" scope="col">Strict Transport Security (HSTS)</th>
+        </tr>
+      </thead>
+    </table>
+  </div>
+  <p id="loading">Het laden kan eventjes duren..<p>
+
+</section>
+
+<script src="/static/js/https-onderwijs/agencies.js?{{ now() | date("%Y%m%j%H%M%S") }}"></script>
+{% endblock %}

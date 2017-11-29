@@ -53,6 +53,20 @@ var Utils = {
     };
   },
 
+  // used to make "71" say "71 domains" and link to filtered domains
+  filterAgencyOnderwijs: function(page) {
+    return function(data, type, row) {
+      if (type == "sort")
+        return data;
+      else
+        return "" +
+          "<a href=\"/" + page + "-onderwijs/domains/#" +
+            QueryString.stringify({q: row["name"]}) + "\">" +
+            data +
+          "</a>";
+    };
+  },
+
   searchLinks: function() {
     var api = this.api();
     var query = QueryString.parse(location.hash).q;

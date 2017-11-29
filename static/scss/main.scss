@@ -99,7 +99,7 @@ footer {
 }
 
 .footer-text {
-  width: 30%;
+  width: 28%;
   float: left; }
 
 .footer-contact {
@@ -107,7 +107,7 @@ footer {
   margin-left: 8%;
   padding: 20px 0;
   color: rgb(128, 128, 128) !important;
-  width: 30%; }
+  width: 28%; }
 
 .footer-contact li {
   margin: 5px; }
@@ -259,7 +259,7 @@ a#skipnav {
           font-size: 1.5em;
         }
 
-        .tab.overheid {
+        .tab.overheid, .tab.onderwijs {
           width: 33.33%;
           margin: 0;
           float: left;
@@ -308,6 +308,7 @@ a#skipnav {
 
 .https_chart,
 .zorg_https_chart,
+.onderwijs_https_chart,
 .dap_chart {
   padding-top: 15px;
 }
