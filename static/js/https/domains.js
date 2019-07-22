@@ -212,10 +212,10 @@ $(document).ready(function () {
   };
 
   var links = {
-    hsts: "https://www.ncsc.nl/actueel/factsheets/factsheet-https-kan-een-stuk-veiliger.html",
-    sha1: "https://www.ncsc.nl/actueel/factsheets/factsheet-https-kan-een-stuk-veiliger.html",
-    ssl3: "https://www.ncsc.nl/actueel/whitepapers/ict-beveiligingsrichtlijnen-voor-transport-layer-security-tls.html",
-    tls12: "https://www.ncsc.nl/actueel/whitepapers/ict-beveiligingsrichtlijnen-voor-transport-layer-security-tls.html",
+    hsts: "https://www.ncsc.nl/documenten/factsheets/2019/juni/01/factsheet-https-kan-een-stuk-veiliger",
+    sha1: "https://www.ncsc.nl/documenten/factsheets/2019/juni/01/factsheet-https-kan-een-stuk-veiliger",
+    ssl3: "https://www.ncsc.nl/documenten/publicaties/2019/mei/01/ict-beveiligingsrichtlijnen-voor-transport-layer-security-tls",
+    tls12: "https://www.ncsc.nl/documenten/publicaties/2019/mei/01/ict-beveiligingsrichtlijnen-voor-transport-layer-security-tls",
     preload: "https://www.ncsc.nl/",
     stay_preloaded: "https://hstspreload.appspot.com/#continued-requirements",
     submit: "https://hstspreload.appspot.com"
